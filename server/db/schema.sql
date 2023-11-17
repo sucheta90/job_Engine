@@ -16,16 +16,31 @@ CREATE TABLE jobs(
     experience_min INT NOT NULL,
     experience_max INT NOT NULL,
     run_until INT NOT NULL,
-    skills_required TEXT,
     description TEXT,
     responsibility TEXT,
     salary_min FLOAT,
     salary_max FLOAT,
-    location_city VARCHAR(50),
-    location_state VARCHAR(50),
+    job_location_city VARCHAR(50),
+    job_location_state VARCHAR(50),
     job_type VARCHAR(50),
     company_id INT,
     FOREIGN KEY(company_id)
     REFERENCES company(id)
-    ON DELETE SET NULL
+    ON DELETE SET NULL,
+    application_received INT,
+    job_status VARCHAR(30),
+    skills_required SET
 );
+
+CREATE TABLE candidate(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+    name VARCHAR(100),
+    email VARCHAR(100),
+    password VARCHAR(50)
+
+)
+
+CREATE TABLE skills(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+    skill_name VARCHAR(100)
+)
