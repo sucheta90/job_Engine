@@ -13,8 +13,8 @@ CREATE TABLE company(
 CREATE TABLE jobs(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     job_title VARCHAR(255),
-    experience_min INT NOT NULL,
-    experience_max INT NOT NULL,
+    experience_required_min INT NOT NULL,
+    experience_required_max INT NOT NULL,
     run_until INT NOT NULL,
     description TEXT,
     responsibility TEXT,
