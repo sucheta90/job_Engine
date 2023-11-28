@@ -7,6 +7,7 @@ import Candidate from "./pages/Candidate.jsx";
 import Employer from "./pages/Employer.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Homepage from "./pages/Homepage.jsx";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 
 const router = createBrowserRouter([
