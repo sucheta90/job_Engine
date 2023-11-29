@@ -4,11 +4,11 @@ import Footer from "./components/Footer/Footer";
 import NavHeader from "./components/Navigation/Navbar";
 function App() {
   return (
-    <>
+    <div className="main_container">
       <NavHeader />
       <Outlet />
       <Footer />
-    </>
+    </div>
   );
 }
 
