@@ -1,0 +1,8 @@
+#employer_dashboard {
+  background-image: url(../../../assets/business-people-working-searching-applicants_1262-19729.avif);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#employer_dashboard div {
+  height: 800px;
+}
