@@ -6,7 +6,7 @@ import About from "./pages/About.jsx";
 import Candidate from "./pages/Candidate.jsx";
 import Employer from "./pages/employer/Employer.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Homepage from "./pages/Homepage.jsx";
+import Homepage from "./pages/homepage/Homepage.jsx";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
