@@ -1,18 +1,25 @@
 const router = require("express").Router();
 const db = require("../config/dbConnection");
+const { getAllJobs, getAJob } = require("../dbQueries/dbQuery");
 
+// get all jobs
 router.get("/jobs", (req, res) => {
+  // const result = getAllJobs();
+  // console.log(result.length);
   const sql = "SELECT * FROM jobs";
   db.query(sql, (err, result) => {
     if (err) {
       res.status(500).json({ message: err.message });
     }
-    res.json({ message: "success", data: result });
+    res.json({
+      message: "success",
+      result,
+    });
   });
 });
 
 // getting a specific job by id
-router.get("/jobs/:jobid", (req, res) => {
+router.get("/job/:jobid", (req, res) => {
   // prepared a dummy return for until the forntend is set up
   const sql = "SELECT * FROM jobs WHERE id = ?";
   const params = req.params.jobid;
@@ -23,50 +30,70 @@ router.get("/jobs/:jobid", (req, res) => {
     }
     res.json({
       message: "success",
-      data: [
-        {
-          id: "123", //id will be created and auto incremented
-          job_title: "Some Title", //this is the job title
-          salary_min: 50.0,
-          salary_max: 100.0,
-          experience_min: 0,
-          experience_max: 3,
-          posted_until: 60, //number of days
-          location_city: "city name",
-          location_state: "state name", //the state
-          job_type: "hybrid or on-site or WFH",
-          job_description: "TEXT",
-          job_responsibility: "Text",
-          job_skills: ["skill_1", "skill_2", "skill_3", "skill_4"], // specific skills related to this job responsibility will be listed
-          company: "some company", // to get details from conpany id,
-          application_received: 5,
-        },
-      ],
+      result,
     });
   });
 });
-router.post("/jobs", (req, res) => {
-  const sql =
-    "INSERT INTO jobs (job_title, experience_required_min, experience_required_max, run_until, job_location_city, job_location_state, job_type, salary_min, salary_max, description, responsibility, job_status, application_received, skills_required) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-  const params = [
-    req.params.job_title,
-    req.params.experience_min,
-    req.params.experience_max,
-    req.params.posted_until,
-    req.location_city,
-    req.location_state,
-    req.job_type,
-    req.params.salary_min,
-    req.params.salary_max,
-    req.params.job_description,
-    req.params.job_responsibility,
-    
-    req.params.application_received,
 
+//
+router.post("/job", (req, res) => {
+  const sql =
+    "INSERT INTO jobs (job_title, experience_min, experience_max, run_until, description, responsibility, salary_min, salary_max, location_city, location_state, job_type, company_id, skills_required) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  const params = [
+    req.body.job_title,
+    req.body.experience_min,
+    req.body.experience_max,
+    req.body.posted_until,
+    req.body.job_description,
+    req.body.job_responsibility,
+    req.body.salary_min,
+    req.body.salary_max,
+    req.body.location_city,
+    req.body.location_state,
+    req.body.job_type,
+    req.body.company_id,
+    req.body.application_received,
+    req.body.job_status,
+    req.body.job_skills,
   ];
+  db.query(sql, params, (err, result) => {
+    err
+      ? res.status(500).json({ message: err.message })
+      : res.json({ message: "Job posted successfully" });
+  });
 });
-router.put("/jobs/:jobid", (req, res) => {
-  res.send("Makes changes to job");
+
+router.put("/job/:jobid", (req, res) => {
+  const sql =
+    "UPDATE jobs SET job_title = ?, experience_min = ?, experience_max = ?, run_until = ?, description = ?, responsibility = ?, salary_min = ?, salary_max = ?, location_city = ?, location_state = ?, job_type = ?, company_id = ?, skills_required = ? WHERE id = ?";
+  const id = req.params.jobid;
+  const params = [
+    req.body.job_title,
+    req.body.experience_min,
+    req.body.experience_max,
+    req.body.posted_until,
+    req.body.job_description,
+    req.body.job_responsibility,
+    req.body.salary_min,
+    req.body.salary_max,
+    req.body.location_city,
+    req.body.location_state,
+    req.body.job_type,
+    req.body.company_id,
+    req.body.application_received,
+    req.body.job_status,
+    req.body.job_skills,
+    id,
+  ];
+  console.log(this);
+  console.log("This is the request body", req.body);
+
+  db.query(sql, params, (err, result) => {
+    err
+      ? console.log("Something went wrong")
+      : res.json({ message: "Record updated successfully" });
+  });
+  // res.send("Makes changes to job");
 });
 router.delete("/jobs/:jobid", (req, res) => {
   res.send("delete job by id");
