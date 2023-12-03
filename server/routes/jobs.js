@@ -43,7 +43,7 @@ router.post("/job", (req, res) => {
     req.body.job_title,
     req.body.experience_min,
     req.body.experience_max,
-    req.body.posted_until,
+    req.body.run_until,
     req.body.job_description,
     req.body.job_responsibility,
     req.body.salary_min,
@@ -71,7 +71,7 @@ router.put("/job/:jobid", (req, res) => {
     req.body.job_title,
     req.body.experience_min,
     req.body.experience_max,
-    req.body.posted_until,
+    req.body.run_until,
     req.body.job_description,
     req.body.job_responsibility,
     req.body.salary_min,
@@ -80,8 +80,8 @@ router.put("/job/:jobid", (req, res) => {
     req.body.location_state,
     req.body.job_type,
     req.body.company_id,
-    req.body.application_received,
-    req.body.job_status,
+    // req.body.application_received,
+    // req.body.job_status,
     req.body.job_skills,
     id,
   ];
@@ -89,9 +89,11 @@ router.put("/job/:jobid", (req, res) => {
   console.log("This is the request body", req.body);
 
   db.query(sql, params, (err, result) => {
-    err
-      ? console.log("Something went wrong")
-      : res.json({ message: "Record updated successfully" });
+    if (err) {
+      console.log("This is the error------", err);
+      res.status(500).json({ message: "Something went wrong" });
+    }
+    res.json({ message: "Record updated successfully" });
   });
   // res.send("Makes changes to job");
 });
