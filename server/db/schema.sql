@@ -5,7 +5,10 @@ USE company_db;
 
 CREATE TABLE company(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
+    company_name VARCHAR(255),
+    address VARCHAR(255),
+    contact_person VARCHAR(100),
+    company_website_url VARCHAR(100),
     email VARCHAR(100),
     password VARCHAR(50)
 );
@@ -27,20 +30,19 @@ CREATE TABLE jobs(
     FOREIGN KEY(company_id)
     REFERENCES company(id)
     ON DELETE SET NULL,
-    /* application_received INT, */
-    /* job_status VARCHAR(30), */
-    skills_required SET
+    application_received INT,
+    job_status VARCHAR(30),
+    skills_required VARCHAR(30)
 );
 
 CREATE TABLE candidate(
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
-    name VARCHAR(100),
-    email VARCHAR(100),
-    password VARCHAR(50)
-
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(50) NOT NULL
 )
 
-CREATE TABLE skills(
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
-    skill_name VARCHAR(100)
+CREATE TABLE skill(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    skill_name VARCHAR(100) NOT NULL
 )
