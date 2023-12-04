@@ -6,3 +6,37 @@
 #employer_dashboard div {
   height: 800px;
 }
+#aside {
+  /* border: 1px solid blue; */
+  background-color: rgba(187, 245, 229, 0.652);
+  margin-left: 50%;
+  animation: slidein 2s ease-in;
+  transition: ease-in 2s;
+  display: flex;
+}
+.company-landing {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  justify-items: center;
+}
+#company-login,
+#company-signup {
+  width: 100%;
+  padding: 2em;
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+@keyframes slidein {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
