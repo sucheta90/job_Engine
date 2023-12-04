@@ -36,7 +36,7 @@ router.get("/job/:jobid", (req, res) => {
 });
 
 //
-router.post("/job", (req, res) => {
+router.post("/company/:companyId/job", (req, res) => {
   const sql =
     "INSERT INTO jobs (job_title, experience_min, experience_max, run_until, description, responsibility, salary_min, salary_max, location_city, location_state, job_type, company_id, skills_required) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
   const params = [
