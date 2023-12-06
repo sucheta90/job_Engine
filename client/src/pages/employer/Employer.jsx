@@ -1,6 +1,9 @@
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/esm/Button";
 import Stack from "react-bootstrap/esm/Stack";
+import Loginform from "../../components/Forms/Loginform";
+import SignupForm from "../../components/Forms/Signupfrom";
+// eslint-disable-next-line no-unused-vars
+import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import { useState, useEffect } from "react";
 import "./Employer.css";
@@ -31,29 +34,32 @@ export default function Employer() {
     e.preventDefault();
     setIsMember((prevState) => !prevState);
   };
-  // function handles change in form input
-  function handleInputChange(e) {
+  // function handles input change in Login form
+  function handleLoginInput(e) {
     const { name, value } = e.target;
-    if (isMember) {
-      setUserFormData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    } else {
-      setSignupFormData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    }
+    setUserFormData((prevState) => ({ ...prevState, [name]: value }));
   }
-  function handleSubmit(e) {
+  // function handles input change in SignUP form
+  function handleSignupInput(e) {
+    const { name, value } = e.target;
+    setSignupFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+  const login = (e) => {
     e.preventDefault();
-    console.log(e);
-    // if (isMember) {
-    //   console.log(userFormData);
-    // }
-    // console.log(signupFormData);
-  }
+    console.log("Inside login form");
+    let formData = { ...userFormData };
+    console.log(formData);
+  };
+  const signup = (e) => {
+    e.preventDefault();
+    console.log("Inside signup form");
+    let formData = { ...signupFormData };
+    console.log(formData);
+  };
+
   return (
     <Container fluid id="employer_dashboard">
       <h1>Posting Jobs Made Effortless!</h1>
@@ -62,138 +68,20 @@ export default function Employer() {
           <Stack direction="horizontal" className="company-landing">
             {isMember ? (
               // THIS IS THE LOGIN FORM - SHOWS WHEN ISMEMEBER == TRUE
-              <form action="" id="company-login" onSubmit={handleSubmit}>
-                <h3>Login</h3>
-                <label htmlFor="loginEmail">Username</label>
-                <input
-                  id="loginEmail"
-                  type="email"
-                  placeholder="email"
-                  name="loginEmail"
-                  value={userFormData.loginEmail}
-                  onChange={handleInputChange}
-                  required
-                />
-                <label htmlFor="login-password">Password</label>
-                <input
-                  id="loginPassword"
-                  type="password"
-                  placeholder="password"
-                  name="loginPassword"
-                  value={userFormData.loginPassword}
-                  onChange={handleInputChange}
-                  required
-                />
-                <Button onClick={handleSubmit}>Log In</Button>
-                <p>
-                  Not a member yet?{" "}
-                  <a href="" onClick={switchForms}>
-                    Sign up now
-                  </a>
-                </p>
-              </form>
+              <Loginform
+                userFormData={userFormData}
+                handleInputChange={handleLoginInput}
+                handleSubmit={login}
+                switchForms={switchForms}
+              />
             ) : (
               // THIS IS THE SIGNUP FORM - SHOWS WHEN ISMEMEBER == FALSE
-              <form action="" id="company-signup">
-                <h3>Sign up</h3>
-                <label htmlFor="company-name">Company Name</label>
-                <input
-                  id="company-name"
-                  type="text"
-                  placeholder="Company Name"
-                  name="company_name"
-                  value={signupFormData.company_name}
-                  onChange={handleInputChange}
-                  required
-                />
-                <label htmlFor="company-address">Address</label>
-                <input
-                  id="company-address"
-                  type="text"
-                  placeholder="Company Name"
-                  name="company_street"
-                  value={signupFormData.company_street}
-                  onChange={handleInputChange}
-                  required
-                />
-                <label htmlFor="location-state">State</label>
-                <input
-                  id="location-state"
-                  type="text"
-                  placeholder="State"
-                  name="location_state"
-                  value={signupFormData.location_state}
-                  onChange={handleInputChange}
-                  required
-                />
-                <label htmlFor="location-city">City</label>
-                <input
-                  id="location-city"
-                  type="text"
-                  placeholder="City"
-                  name="location_city"
-                  value={signupFormData.company_city}
-                  onChange={handleInputChange}
-                  required
-                />
-                <label htmlFor="contact-name">Point of Contact</label>
-                <input
-                  id="contact-name"
-                  type="text"
-                  placeholder="Your Name"
-                  name="contact_name"
-                  value={signupFormData.contact_name}
-                  onChange={handleInputChange}
-                  required
-                />
-                <label htmlFor="contact-phone">Point of Contact</label>
-                <input
-                  id="contact-phone"
-                  type="tel"
-                  placeholder="Your Name"
-                  name="contact_phone"
-                  value={signupFormData.contact_phone}
-                  onChange={handleInputChange}
-                  required
-                />
-                <label htmlFor="company-url">Company Website</label>
-                <input
-                  id="company-url"
-                  type="text"
-                  placeholder="Company Website"
-                  name="company_url"
-                  value={signupFormData.company_url}
-                  onChange={handleInputChange}
-                  required
-                />
-                <label htmlFor="company-email">Email</label>
-                <input
-                  id="company-email"
-                  type="email"
-                  placeholder="preferred email"
-                  name="company_email"
-                  value={signupFormData.company_email}
-                  onChange={handleInputChange}
-                  required
-                />
-                <label htmlFor="company-password">Password</label>
-                <input
-                  id="company-password"
-                  type="text"
-                  placeholder="Company Name"
-                  name="company_password"
-                  value={signupFormData.company_password}
-                  onChange={handleInputChange}
-                  required
-                />
-                <Button onClick={handleSubmit}>Sign Up</Button>
-                <p>
-                  Already a member?{" "}
-                  <a href="" onClick={switchForms}>
-                    Log In
-                  </a>{" "}
-                </p>
-              </form>
+              <SignupForm
+                signupFormData={signupFormData}
+                handleInputChange={handleSignupInput}
+                handleSubmit={signup}
+                switchForms={switchForms}
+              />
             )}
           </Stack>
         </aside>
