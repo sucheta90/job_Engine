@@ -6,7 +6,9 @@ USE company_db;
 CREATE TABLE company(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     company_name VARCHAR(255),
-    address VARCHAR(255),
+    address VARCHAR(300),
+    location_city VARCHAR(50),
+    location_state VARCHAR(50),
     contact_person VARCHAR(100),
     company_website_url VARCHAR(100),
     email VARCHAR(100),
