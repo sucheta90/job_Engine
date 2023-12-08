@@ -57,7 +57,23 @@ export default function Employer() {
     e.preventDefault();
     console.log("Inside signup form");
     let formData = { ...signupFormData };
-    console.log(formData);
+    axios
+      .post("/api/new/company", formData)
+      .then((response) => console.log(response))
+      .catch((err) => {
+        console.log(err);
+      });
+    setSignupFormData({
+      company_name: "",
+      company_street: "",
+      location_state: "",
+      location_city: "",
+      contact_name: "",
+      contact_phone: "",
+      company_url: "",
+      company_email: "",
+      company_password: "",
+    });
   };
 
   return (

@@ -24,19 +24,9 @@ export default function SignupForm({
       <input
         id="company-address"
         type="text"
-        placeholder="Company Name"
+        placeholder="Street Address"
         name="company_street"
         value={signupFormData.company_street}
-        onChange={handleInputChange}
-        required
-      />
-      <label htmlFor="location-state">State</label>
-      <input
-        id="location-state"
-        type="text"
-        placeholder="State"
-        name="location_state"
-        value={signupFormData.location_state}
         onChange={handleInputChange}
         required
       />
@@ -50,6 +40,16 @@ export default function SignupForm({
         onChange={handleInputChange}
         required
       />
+      <label htmlFor="location-state">State</label>
+      <input
+        id="location-state"
+        type="text"
+        placeholder="State"
+        name="location_state"
+        value={signupFormData.location_state}
+        onChange={handleInputChange}
+        required
+      />
       <label htmlFor="contact-name">Point of Contact</label>
       <input
         id="contact-name"
@@ -60,16 +60,16 @@ export default function SignupForm({
         onChange={handleInputChange}
         required
       />
-      <label htmlFor="contact-phone">Point of Contact</label>
+      {/* <label htmlFor="contact-phone">Phone</label>
       <input
         id="contact-phone"
         type="tel"
-        placeholder="Your Name"
+        placeholder="Phone Number"
         name="contact_phone"
         value={signupFormData.contact_phone}
         onChange={handleInputChange}
         required
-      />
+      /> */}
       <label htmlFor="company-url">Company Website</label>
       <input
         id="company-url"
@@ -84,7 +84,7 @@ export default function SignupForm({
       <input
         id="company-email"
         type="email"
-        placeholder="preferred email"
+        placeholder="Email"
         name="company_email"
         value={signupFormData.company_email}
         onChange={handleInputChange}
@@ -93,8 +93,8 @@ export default function SignupForm({
       <label htmlFor="company-password">Password</label>
       <input
         id="company-password"
-        type="text"
-        placeholder="Company Name"
+        type="password"
+        placeholder="Password"
         name="company_password"
         value={signupFormData.company_password}
         onChange={handleInputChange}
