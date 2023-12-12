@@ -12,7 +12,7 @@ CREATE TABLE company(
     contact_person VARCHAR(100),
     company_website_url VARCHAR(100),
     email VARCHAR(100),
-    password VARCHAR(50)
+    password VARCHAR(255)
 );
 
 CREATE TABLE jobs(
