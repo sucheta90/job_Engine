@@ -2,13 +2,37 @@ const router = require("express").Router();
 const db = require("../config/dbConnection");
 const { hashPassword, checkUser } = require("../utils/passwordHashing.js");
 
-router.get("/employer/:id");
-
 // API endpoint for login
+router.post("/company/login", async (req, res) => {
+  console.log("This is the req body when logging backend", req.body);
+
+  // deconstructed variables from the req.body
+  const { loginEmail, loginPassword } = req.body;
+  const sqlGetUserByEmail = "SELECT * FROM company WHERE email = ?";
+  try {
+    if (loginEmail && loginPassword) {
+      db.query(sqlGetUserByEmail, loginEmail, async (err, result) => {
+        if (err) {
+          // console.log("this is an error looking for email", err);
+          res.status(404).json("Invalid email or password");
+        }
+        console.log("This is the result from query", result);
+        const userPassword = result[0].password;
+        const match = await checkUser(loginPassword, userPassword);
+        if (match) {
+          res.status(200).json({ message: "login success" });
+        }
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json("Invalid email or password");
+  }
+});
 
 // Api endpoint for company Signup
-router.post("/new/company", async (req, res) => {
-  console.log("This is a log from the backend code", req.body);
+router.post("/company/signup", async (req, res) => {
+  // console.log("This is a log from the backend code", req.body);
   // deconstructed variables from the req.body
   const {
     company_name,
