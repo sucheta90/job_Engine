@@ -51,15 +51,27 @@ export default function Employer() {
     e.preventDefault();
     console.log("Inside login form");
     let formData = { ...userFormData };
-    console.log(formData);
+    console.log("this is the formdata from login", formData);
+    axios
+      .post("/api/company/login", formData)
+      // eslint-disable-next-line no-unused-vars
+      .then((response) => console.log("Success"))
+      .catch((err) => {
+        console.log(err);
+      });
+    setUserFormData({
+      loginEmail: "",
+      loginPassword: "",
+    });
   };
   const signup = (e) => {
     e.preventDefault();
     console.log("Inside signup form");
     let formData = { ...signupFormData };
     axios
-      .post("/api/new/company", formData)
-      .then((response) => console.log(response))
+      .post("/api/company/signup", formData)
+      // eslint-disable-next-line no-unused-vars
+      .then((response) => console.log("Successfully signed up"))
       .catch((err) => {
         console.log(err);
       });
