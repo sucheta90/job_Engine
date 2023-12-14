@@ -52,7 +52,6 @@ export default function Employer() {
     e.preventDefault();
     console.log("Inside login form");
     let formData = { ...userFormData };
-    console.log("this is the formdata from login", formData);
     axios
       .post("/api/company/login", formData)
       // eslint-disable-next-line no-unused-vars
@@ -67,7 +66,6 @@ export default function Employer() {
   };
   const signup = (e) => {
     e.preventDefault();
-    console.log("Inside signup form");
     let formData = { ...signupFormData };
     axios
       .post("/api/company/signup", formData)
