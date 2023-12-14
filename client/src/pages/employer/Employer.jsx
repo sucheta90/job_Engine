@@ -79,8 +79,8 @@ export default function Employer() {
     setSignupFormData({
       company_name: "",
       company_street: "",
-      location_state: "",
       location_city: "",
+      location_state: "",
       contact_name: "",
       contact_phone: "",
       company_url: "",
