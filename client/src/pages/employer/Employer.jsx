@@ -47,6 +47,7 @@ export default function Employer() {
       [name]: value,
     }));
   }
+  // Login function
   const login = (e) => {
     e.preventDefault();
     console.log("Inside login form");
