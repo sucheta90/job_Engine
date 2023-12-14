@@ -34,7 +34,19 @@
   justify-content: space-evenly;
   align-items: center;
 }
-
+#company-signup span,
+#company-login span {
+  margin: 0.8em 0;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* border: 1px solid red; */
+}
+#company-signup span label,
+#company-login span label {
+  margin-right: 1em;
+}
 @keyframes slidein {
   from {
     transform: translateX(100%);
