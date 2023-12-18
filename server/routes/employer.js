@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const db = require("../config/dbConnection");
 const { hashPassword, checkUser } = require("../utils/passwordHashing.js");
+const { signToken, authMiddleWare } = require("../utils/auth.js");
 
 // API endpoint for login
 router.post("/company/login", async (req, res) => {
@@ -17,10 +18,16 @@ router.post("/company/login", async (req, res) => {
           res.status(404).json("Invalid email or password");
         }
         console.log("This is the result from query", result);
-        const userPassword = result[0].password;
+        const user = result[0];
+        const userPassword = user.password;
         const match = await checkUser(loginPassword, userPassword);
         if (match) {
-          res.status(200).json({ message: "login success" });
+          const token = signToken({
+            email: loginEmail,
+            comapany_name: user.comapany_name,
+            id: user.id,
+          });
+          res.status(200).json({ message: "login success", token, user });
         }
       });
     }
