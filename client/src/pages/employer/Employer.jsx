@@ -2,6 +2,7 @@ import Container from "react-bootstrap/Container";
 import Stack from "react-bootstrap/esm/Stack";
 import Loginform from "../../components/Forms/Loginform";
 import SignupForm from "../../components/Forms/Signupfrom";
+import authService from "../../utils/auth";
 // eslint-disable-next-line no-unused-vars
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
@@ -48,22 +49,28 @@ export default function Employer() {
     }));
   }
   // Login function
-  const login = (e) => {
+  const login = async (e) => {
     e.preventDefault();
-    console.log("Inside login form");
+    // console.log("Inside login form");
     let formData = { ...userFormData };
-    axios
-      .post("/api/company/login", formData)
-      // eslint-disable-next-line no-unused-vars
-      .then((response) => console.log("Success"))
-      .catch((err) => {
-        console.log(err);
+    try {
+      const response = await axios.post("/api/company/login", formData);
+      if (response.status !== 200) {
+        throw Error("could not log in");
+      }
+      const { token, user } = response.data;
+      // console.log("This is the TOKEN sent from backend server", token);
+      // console.log("This is the USER sent from backend server", user);
+      authService.login(token);
+      setUserFormData({
+        loginEmail: "",
+        loginPassword: "",
       });
-    setUserFormData({
-      loginEmail: "",
-      loginPassword: "",
-    });
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   const signup = (e) => {
     e.preventDefault();
     let formData = { ...signupFormData };
