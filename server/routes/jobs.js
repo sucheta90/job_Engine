@@ -97,7 +97,16 @@ router.put("/job/:jobid", (req, res) => {
   });
   // res.send("Makes changes to job");
 });
-router.delete("/jobs/:jobid", (req, res) => {
+
+router.delete("/jobs/:companyId/:jobid", (req, res) => {
+  const id = req.params.jobid;
+  const sql = "DELETE FROM jobs WHERE id = ?";
+  db.query(sql, id, (err, result) => {
+    if (err) {
+      res.status(500).json({ message: "Delete unsuccessful" });
+    }
+    res.status(200).json({ message: "Deleted successfully" });
+  });
   res.send("delete job by id");
 });
 

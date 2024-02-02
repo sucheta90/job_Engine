@@ -58,9 +58,8 @@ export default function Employer() {
       if (response.status !== 200) {
         throw Error("could not log in");
       }
+      // eslint-disable-next-line no-unused-vars
       const { token, user } = response.data;
-      // console.log("This is the TOKEN sent from backend server", token);
-      // console.log("This is the USER sent from backend server", user);
       authService.login(token);
       setUserFormData({
         loginEmail: "",
