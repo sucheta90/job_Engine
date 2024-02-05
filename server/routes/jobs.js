@@ -35,6 +35,11 @@ router.get("/job/:jobid", (req, res) => {
   });
 });
 
+router.get("/company/:companyId/jobs", (req, res) => {
+  const sql = "SELECT * FROM job WHERE company_id = ?";
+  const company_id = req.params.companyId;
+});
+
 //
 router.post("/company/:companyId/job", (req, res) => {
   const sql =
