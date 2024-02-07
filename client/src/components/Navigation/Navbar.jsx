@@ -1,8 +1,10 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import auth from "../../utils/auth";
+// import NavDropdown from "react-bootstrap/NavDropdown";
 import { useLocation } from "react-router-dom";
+import { useState } from "react";
 
 export default function NavHeader() {
   // Main Navbar
@@ -12,7 +14,7 @@ export default function NavHeader() {
     <Navbar expand="lg" className="bg-body-tertiary ">
       <Container fluid>
         <Navbar.Brand href="/" className={currentPage === "/" ? "active" : ""}>
-          JobFound(get-a-logo)
+          Worknado
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -29,7 +31,7 @@ export default function NavHeader() {
             >
               Employer
             </Nav.Link>
-            <NavDropdown title="Job Seekers" id="basic-nav-dropdown">
+            {/* <NavDropdown title="Job Seekers" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 Another action
@@ -39,7 +41,24 @@ export default function NavHeader() {
               <NavDropdown.Item href="#action/3.4">
                 Separated link
               </NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
+          </Nav>
+          <Nav className="">
+            {auth.loggedIn() ? (
+              <Nav.Link>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    auth.logout();
+                  }}
+                  className="btn btn-light"
+                >
+                  Log Out
+                </button>
+              </Nav.Link>
+            ) : (
+              ""
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

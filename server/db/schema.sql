@@ -15,16 +15,19 @@ CREATE TABLE company(
     password VARCHAR(255)
 );
 
-CREATE TABLE jobs(
+CREATE TABLE job(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     job_title VARCHAR(255),
+    company_details TEXT,
     experience_min INT NOT NULL,
     experience_max INT NOT NULL,
     run_until INT NOT NULL,
     description TEXT,
     responsibility TEXT,
+    skills TEXT,
     salary_min FLOAT,
     salary_max FLOAT,
+    benefits TEXT,
     location_city VARCHAR(50),
     location_state VARCHAR(50),
     job_type VARCHAR(50),
@@ -33,8 +36,7 @@ CREATE TABLE jobs(
     REFERENCES company(id)
     ON DELETE SET NULL,
     application_received INT,
-    job_status VARCHAR(30),
-    skills_required VARCHAR(30)
+    job_status VARCHAR(30)
 );
 
 CREATE TABLE candidate(

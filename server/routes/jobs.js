@@ -43,28 +43,33 @@ router.get("/company/:companyId/jobs", (req, res) => {
 //
 router.post("/company/:companyId/job", (req, res) => {
   const sql =
-    "INSERT INTO jobs (job_title, experience_min, experience_max, run_until, description, responsibility, salary_min, salary_max, location_city, location_state, job_type, company_id, skills_required) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    "INSERT INTO job (job_title, company_details, experience_min, experience_max, run_until, description, responsibility, skills, salary_min, salary_max, benefits, location_city, location_state, job_type, company_id, application_received, job_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?, ?, ?,?,?)";
   const params = [
     req.body.job_title,
+    req.body.company_details,
     req.body.experience_min,
     req.body.experience_max,
     req.body.run_until,
-    req.body.job_description,
-    req.body.job_responsibility,
+    req.body.description,
+    req.body.responsibility,
+    req.body.skills,
     req.body.salary_min,
     req.body.salary_max,
+    req.body.benefits,
     req.body.location_city,
     req.body.location_state,
     req.body.job_type,
     req.body.company_id,
     req.body.application_received,
     req.body.job_status,
-    req.body.job_skills,
   ];
   db.query(sql, params, (err, result) => {
-    err
-      ? res.status(500).json({ message: err.message })
-      : res.json({ message: "Job posted successfully" });
+    console;
+    if (err) {
+      console.log(err);
+      res.status(500).json({ message: err.message });
+    }
+    res.status(200).json({ message: "Job posted successfully", result });
   });
 });
 

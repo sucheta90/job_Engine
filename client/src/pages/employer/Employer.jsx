@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Stack from "react-bootstrap/esm/Stack";
 import Loginform from "../../components/Forms/Loginform";
 import SignupForm from "../../components/Forms/Signupfrom";
-import authService from "../../utils/auth";
+import auth from "../../utils/auth";
 // eslint-disable-next-line no-unused-vars
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
@@ -60,7 +60,7 @@ export default function Employer() {
       }
       // eslint-disable-next-line no-unused-vars
       const { token, user } = response.data;
-      authService.login(token);
+      auth.login(token);
       setUserFormData({
         loginEmail: "",
         loginPassword: "",
