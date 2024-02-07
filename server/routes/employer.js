@@ -4,6 +4,7 @@ const { hashPassword, checkUser } = require("../utils/passwordHashing.js");
 const { signToken, authMiddleWare } = require("../utils/auth.js");
 
 // API endpoint for login
+router.get("/company/:companyId");
 router.post("/company/login", async (req, res) => {
   // console.log("This is the req body when logging backend", req.body);
   // deconstructed variables from the req.body
@@ -20,7 +21,6 @@ router.post("/company/login", async (req, res) => {
         const user = result[0];
         const userPassword = user.password;
         const match = await checkUser(loginPassword, userPassword);
-        console.log("Checking if matched", match);
         if (match) {
           const token = signToken({
             email: loginEmail,

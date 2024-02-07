@@ -2,12 +2,14 @@ export default function About() {
   return (
     <>
       <div>
+        <h1>About Us</h1>
         <img
           src="../../../assets/social-media-star-abstract-concept-vector-illustration-influencer-social-media-reach-engagement-celebrity-account-monetization-personal-blog-star-content-creation-abstract-metaphor_335657-4158.avif"
           alt=""
+          className="img-fluid"
         />
       </div>
-      <div>
+      <div className="p-3">
         <h1>Worknado: Where Careers Take Flight</h1>
         <p>
           Worknado is not just another job search platform; it&apos;s a dynamic,
