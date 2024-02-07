@@ -7,16 +7,41 @@ import PublishedJobs from "../../components/Dashboard/PublishedJobs";
 // eslint-disable-next-line no-unused-vars
 export default function EmployerDashboard(props) {
   const [toShow, setToShow] = useState(""); // The state will be set to show the specific section on click events
+  const [newJobData, setNewJobData] = useState({
+    job_title: "",
+    company_details: "",
+    experience_min: "",
+    experience_max: "",
+    run_until: "",
+    description: "",
+    responsibility: "",
+    skills: "",
+    salary_min: "",
+    salary_max: "",
+    benefits: "",
+    location_city: "",
+    location_state: "",
+    job_type: "",
+    company_id: "",
+    application_received: "",
+    job_status: "",
+  }); // This is the initial state of the new job post form.
+
+  const handleNewJobFormFill = (e) => {
+    const { name, value } = e.target;
+    setNewJobData((prevVal) => ({ ...prevVal, [name]: value }));
+  };
+
   return (
     <div className="h-100 mb-3">
       <h1>Welcome Too Your Dashboard</h1>
-      <section className="d-flex">
-        <aside>
-          <ul>
-            <li className="m-2 w-100">
+      <section className="d-flex justify-content-center">
+        <aside className="">
+          <ul className="w-100 d-flex flex-column justify-content-center p-2">
+            <li className="mb-2 w-100">
               <Button
                 variant="primary"
-                size="lg"
+                size=""
                 className="w-100"
                 id="AccountDetails"
                 onClick={(e) => {
@@ -28,11 +53,11 @@ export default function EmployerDashboard(props) {
                 Account Details
               </Button>
             </li>
-            <li className="m-2 w-100">
+            <li className="mb-2 w-100">
               <Button
                 className="w-100"
                 variant="primary"
-                size="lg"
+                size=""
                 id="jobPost"
                 onClick={(e) => {
                   e.target.id === "jobPost" ? setToShow("jobPost") : "";
@@ -41,10 +66,10 @@ export default function EmployerDashboard(props) {
                 Post A Job
               </Button>
             </li>
-            <li className="m-2 w-100">
+            <li className="mb-2 w-100">
               <Button
                 variant="primary"
-                size="lg"
+                size=""
                 className="w-100"
                 id="PublishedJobs"
                 onClick={(e) => {
@@ -56,10 +81,10 @@ export default function EmployerDashboard(props) {
                 Published Jobs
               </Button>
             </li>
-            <li className="m-2 w-100">
+            <li className="mb-2 w-100">
               <Button
                 variant="primary"
-                size="lg"
+                size=""
                 className="w-100"
                 id="draft"
                 onClick={(e) => {
@@ -71,9 +96,12 @@ export default function EmployerDashboard(props) {
             </li>
           </ul>
         </aside>
-        <div id="canvas">
+        <div id="canvas" className="border border-dark p-5">
           {toShow === "jobPost" ? (
-            <JobPostForm />
+            <JobPostForm
+              newJobData={newJobData}
+              handleNewJobFormFill={handleNewJobFormFill}
+            />
           ) : toShow === "AccountDetails" ? (
             <AccountDetails />
           ) : toShow === "PublishedJobs" ? (
