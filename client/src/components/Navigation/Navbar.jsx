@@ -4,7 +4,6 @@ import Navbar from "react-bootstrap/Navbar";
 import auth from "../../utils/auth";
 // import NavDropdown from "react-bootstrap/NavDropdown";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
 
 export default function NavHeader() {
   // Main Navbar

@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import JobPostForm from "../../components/Forms/JobPostForm";
 import AccountDetails from "../../components/Dashboard/AccountDetails";
 import JobDrafts from "../../components/Dashboard/JobDrafts";
 import PublishedJobs from "../../components/Dashboard/PublishedJobs";
+import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 export default function EmployerDashboard(props) {
   const [toShow, setToShow] = useState(""); // The state will be set to show the specific section on click events
+  const [userProfile, setUserProfile] = useState({}); //current user/company
   const [newJobData, setNewJobData] = useState({
     job_title: "",
     company_details: "",
@@ -22,16 +24,20 @@ export default function EmployerDashboard(props) {
     location_city: "",
     location_state: "",
     job_type: "",
-    company_id: "",
     application_received: "",
-    job_status: "",
   }); // This is the initial state of the new job post form.
 
   const handleNewJobFormFill = (e) => {
     const { name, value } = e.target;
     setNewJobData((prevVal) => ({ ...prevVal, [name]: value }));
   };
+  const handlePostFormSubmit = async (e) => {
+    e.preventDefault();
+    company_id: "",
+    job_status: "",
 
+    const response = axios.post("",)
+  };
   return (
     <div className="h-100 mb-3">
       <h1>Welcome Too Your Dashboard</h1>
