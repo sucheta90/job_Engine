@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import JobPostForm from "../../components/Forms/JobPostForm";
 import AccountDetails from "../../components/Dashboard/AccountDetails";
 import JobDrafts from "../../components/Dashboard/JobDrafts";
 import PublishedJobs from "../../components/Dashboard/PublishedJobs";
+import auth from "../../utils/auth";
 import axios from "axios";
+
 // eslint-disable-next-line no-unused-vars
 export default function EmployerDashboard(props) {
   const [toShow, setToShow] = useState(""); // The state will be set to show the specific section on click events
@@ -27,16 +29,37 @@ export default function EmployerDashboard(props) {
     application_received: "",
   }); // This is the initial state of the new job post form.
 
+  useEffect(() => {
+    if (auth.loggedIn()) {
+      let user = auth.getProfile();
+      setUserProfile(user.data);
+    }
+  }, []);
+
   const handleNewJobFormFill = (e) => {
     const { name, value } = e.target;
     setNewJobData((prevVal) => ({ ...prevVal, [name]: value }));
   };
   const handlePostFormSubmit = async (e) => {
+    let userId = userProfile.id;
+    let revisedFormData = {
+      ...newJobData,
+      company_id: userId,
+      job_status: "inactive",
+    };
     e.preventDefault();
-    company_id: "",
-    job_status: "",
-
-    const response = axios.post("",)
+    try {
+      const response = await axios.post(
+        `/api/company/${userId}/job`,
+        revisedFormData
+      );
+      console.log("This is the response", response);
+      if (response.status !== 200) {
+        throw Error({ message: "Something went wrong!!" });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div className="h-100 mb-3">
@@ -107,6 +130,7 @@ export default function EmployerDashboard(props) {
             <JobPostForm
               newJobData={newJobData}
               handleNewJobFormFill={handleNewJobFormFill}
+              handlePostFormSubmit={handlePostFormSubmit}
             />
           ) : toShow === "AccountDetails" ? (
             <AccountDetails />

@@ -10,7 +10,7 @@ import Form from "react-bootstrap/Form";
 
 // eslint-disable-next-line no-unused-vars
 function JobPostForm(props) {
-  const { handleNewJobFormFill, newJobData } = props;
+  const { handleNewJobFormFill, newJobData, handlePostFormSubmit } = props;
 
   return (
     <Form>
@@ -188,7 +188,12 @@ function JobPostForm(props) {
         </Form.Select>
       </Form.Group>
 
-      <Button variant="primary" type="submit" className="mr-3">
+      <Button
+        variant="primary"
+        type="submit"
+        className="mr-3"
+        onClick={handlePostFormSubmit}
+      >
         Save as Draft
       </Button>
       <Button variant="primary" type="">

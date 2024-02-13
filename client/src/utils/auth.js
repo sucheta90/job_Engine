@@ -35,7 +35,7 @@ const auth = {
   login(idToken) {
     // Saves user token to localStorage
     localStorage.setItem("id_token", idToken);
-    window.location.assign("/employer/dashboard");
+    window.location.assign("/company/dashboard");
   },
 
   logout() {

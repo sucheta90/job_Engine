@@ -42,8 +42,9 @@ router.get("/company/:companyId/jobs", (req, res) => {
 
 //
 router.post("/company/:companyId/job", (req, res) => {
+  console.log("This route was hit");
   const sql =
-    "INSERT INTO job (job_title, company_details, experience_min, experience_max, run_until, description, responsibility, skills, salary_min, salary_max, benefits, location_city, location_state, job_type, company_id, application_received, job_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?, ?, ?,?,?)";
+    "INSERT INTO job (job_title, company_details, experience_min, experience_max, run_until, description, responsibility, skills, salary_min, salary_max, benefits, location_city, location_state, job_type, company_id, job_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?, ?,?,?)";
   const params = [
     req.body.job_title,
     req.body.company_details,
@@ -60,7 +61,6 @@ router.post("/company/:companyId/job", (req, res) => {
     req.body.location_state,
     req.body.job_type,
     req.body.company_id,
-    req.body.application_received,
     req.body.job_status,
   ];
   db.query(sql, params, (err, result) => {
