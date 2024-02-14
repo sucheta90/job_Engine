@@ -1,10 +1,27 @@
 const router = require("express").Router();
 const db = require("../config/dbConnection");
 const { hashPassword, checkUser } = require("../utils/passwordHashing.js");
-const { signToken, authMiddleWare } = require("../utils/auth.js");
+const { signToken } = require("../utils/auth.js");
+
+router.get("/company/:companyId", (req, res) => {
+  const userId = req.params.companyId;
+  const sql = "SELECT * FROM company WHERE id= ?";
+  try {
+    db.query(sql, userId, (err, result) => {
+      if (err) {
+        res.status(400).json({
+          message:
+            "Could not find account details at this time! please try again!",
+        });
+      }
+      res.status(200).json(result);
+    });
+  } catch (err) {
+    json.status(500).json({ message: err });
+  }
+});
 
 // API endpoint for login
-router.get("/company/:companyId");
 router.post("/company/login", async (req, res) => {
   // console.log("This is the req body when logging backend", req.body);
   // deconstructed variables from the req.body

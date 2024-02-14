@@ -2,17 +2,15 @@ const router = require("express").Router();
 const db = require("../config/dbConnection");
 const { getAllJobs, getAJob } = require("../dbQueries/dbQuery");
 
-// get all jobs
-router.get("/jobs", (req, res) => {
-  // const result = getAllJobs();
-  // console.log(result.length);
-  const sql = "SELECT * FROM jobs";
-  db.query(sql, (err, result) => {
+// get all jobs by user id
+router.get("/company/:companyId/jobs", (req, res) => {
+  const userId = req.params.companyId;
+  const sql = "SELECT * FROM job WHERE company_id = ?";
+  db.query(sql, userId, (err, result) => {
     if (err) {
       res.status(500).json({ message: err.message });
     }
-    res.json({
-      message: "success",
+    res.status(200).json({
       result,
     });
   });
