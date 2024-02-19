@@ -35,7 +35,7 @@ CREATE TABLE job(
     FOREIGN KEY(company_id)
     REFERENCES company(id)
     ON DELETE SET NULL,
-    application_received INT,
+    /* application_received INT DEFAULT 0 NOT NULL, */
     job_status VARCHAR(30)
 );
 

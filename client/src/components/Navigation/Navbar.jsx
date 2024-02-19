@@ -9,6 +9,7 @@ export default function NavHeader() {
   // Main Navbar
 
   const currentPage = useLocation().pathname;
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary ">
       <Container fluid>
@@ -24,12 +25,21 @@ export default function NavHeader() {
             >
               About
             </Nav.Link>
-            <Nav.Link
-              href="/employer"
-              className={currentPage === "/employer" ? "active" : ""}
-            >
-              Employer
-            </Nav.Link>
+            {auth.loggedIn() ? (
+              <Nav.Link
+                href="/company/dashboard"
+                className={currentPage === "/company/dashboard" ? "active" : ""}
+              >
+                Employers Homepage
+              </Nav.Link>
+            ) : (
+              <Nav.Link
+                href="/employer"
+                className={currentPage === "/employer" ? "active" : ""}
+              >
+                Employer
+              </Nav.Link>
+            )}
             {/* <NavDropdown title="Job Seekers" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">

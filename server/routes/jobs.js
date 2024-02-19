@@ -2,17 +2,15 @@ const router = require("express").Router();
 const db = require("../config/dbConnection");
 const { getAllJobs, getAJob } = require("../dbQueries/dbQuery");
 
-// get all jobs
-router.get("/jobs", (req, res) => {
-  // const result = getAllJobs();
-  // console.log(result.length);
-  const sql = "SELECT * FROM jobs";
-  db.query(sql, (err, result) => {
+// get all jobs by user id
+router.get("/company/:companyId/jobs", (req, res) => {
+  const userId = req.params.companyId;
+  const sql = "SELECT * FROM job WHERE company_id = ?";
+  db.query(sql, userId, (err, result) => {
     if (err) {
       res.status(500).json({ message: err.message });
     }
-    res.json({
-      message: "success",
+    res.status(200).json({
       result,
     });
   });
@@ -42,8 +40,9 @@ router.get("/company/:companyId/jobs", (req, res) => {
 
 //
 router.post("/company/:companyId/job", (req, res) => {
+  console.log("This route was hit");
   const sql =
-    "INSERT INTO job (job_title, company_details, experience_min, experience_max, run_until, description, responsibility, skills, salary_min, salary_max, benefits, location_city, location_state, job_type, company_id, application_received, job_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?, ?, ?,?,?)";
+    "INSERT INTO job (job_title, company_details, experience_min, experience_max, run_until, description, responsibility, skills, salary_min, salary_max, benefits, location_city, location_state, job_type, company_id, job_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?, ?,?,?)";
   const params = [
     req.body.job_title,
     req.body.company_details,
@@ -60,7 +59,6 @@ router.post("/company/:companyId/job", (req, res) => {
     req.body.location_state,
     req.body.job_type,
     req.body.company_id,
-    req.body.application_received,
     req.body.job_status,
   ];
   db.query(sql, params, (err, result) => {
