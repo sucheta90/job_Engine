@@ -142,7 +142,12 @@ export default function EmployerDashboard(props) {
         ) : toShow === "PublishedJobs" ? (
           <PublishedJobs />
         ) : toShow === "AllJobs" ? (
-          <JobsList allJobs={allJobs} />
+          <JobsList
+            allJobs={allJobs}
+            handleNewJobFormFill={handleNewJobFormFill}
+            newJobData={newJobData}
+            userProfile={userProfile}
+          />
         ) : (
           ""
         )}
