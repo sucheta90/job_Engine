@@ -76,8 +76,9 @@ router.post("/company/:companyId/job", (req, res) => {
 
 router.put("/company/:companyId/job/:jobId", (req, res) => {
   const sql =
-    "UPDATE jobs SET job_title= ?, company_details= ?, experience_min=?, experience_max=?, run_until=?, description=?, responsibility=?, skills=?, salary_min=?, salary_max=?, benefits=?, location_city=?, location_state=?, job_type=?, company_id=?, job_status=? WHERE id = ?";
+    "UPDATE job SET job_title= ?, company_details= ?, experience_min=?, experience_max=?, run_until=?, description=?, responsibility=?, skills=?, salary_min=?, salary_max=?, benefits=?, location_city=?, location_state=?, job_type=?, company_id=?, job_status=? WHERE company_id=? AND id = ?";
   const id = req.params.jobId;
+  const companyId = req.params.companyId;
   const params = [
     req.body.job_title,
     req.body.company_details,
@@ -95,20 +96,21 @@ router.put("/company/:companyId/job/:jobId", (req, res) => {
     req.body.job_type,
     req.body.company_id,
     req.body.job_status,
+    companyId,
+    id,
   ];
-  console.log(this);
   console.log("This is the request body", req.body);
 
-  db.query(sql, id, params, (err, result) => {
+  db.query(sql, params, (err, result) => {
     try {
       if (err) {
         console.log("This is the error------", err);
-        res.status(500).json({ message: "Could not update the job post" });
+        res.status(500).json({ message: "Could not update the job post", err });
       }
       res.status(200).json({ message: "Record updated successfully" });
     } catch (err) {
       console.log("This is the error------", err);
-      res.status(500).json({ message: "Could not update the job post" });
+      res.status(500).json({ message: "Could not update the job post", err });
     }
   });
 });

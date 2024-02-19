@@ -18,6 +18,7 @@ function JobPostForm(props) {
     job,
     handleCancelEdit,
     handleFormChange,
+    handleEditFormSubmit,
   } = props;
 
   return job ? (
@@ -201,7 +202,7 @@ function JobPostForm(props) {
           variant="primary"
           type="submit"
           className="mr-3"
-          onClick={handlePostFormSubmit}
+          onClick={handleEditFormSubmit}
         >
           Save as Draft
         </Button>

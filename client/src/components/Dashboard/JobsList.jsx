@@ -40,10 +40,21 @@ export default function JobsList({ allJobs, userProfile }) {
     setFormData((prevVal) => ({ ...prevVal, [name]: value }));
   };
   // Executes put request to save changes to the database
-  // const handleEditFormSubmit = (e) => {
-  //   e.preventDefault();
-  //   const jobId =
-  // };
+  const handleEditFormSubmit = async (e) => {
+    e.preventDefault();
+    const userId = userProfile.id;
+    const jobId = formData.jobId;
+    console.log(jobId);
+    try {
+      const response = await axios.put(
+        `/api/company/${userId}/job/${jobId}`,
+        formData
+      );
+      console.log("This is the response", response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
@@ -89,6 +100,7 @@ export default function JobsList({ allJobs, userProfile }) {
           job={formData}
           handleCancelEdit={handleCancelEdit}
           handleFormChange={handleFormChange}
+          handleEditFormSubmit={handleEditFormSubmit}
         />
       ) : (
         ""
