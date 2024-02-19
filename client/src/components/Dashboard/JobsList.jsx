@@ -16,9 +16,7 @@ export default function JobsList({ allJobs }) {
                   <Card.Img variant="top" />
                   <Card.Body>
                     <Card.Title>{job.job_title}</Card.Title>
-                    <Card.Text>
-                      <p>{job.company_details}</p>
-                    </Card.Text>
+                    <Card.Text>{job.company_details}</Card.Text>
                     <Button variant="primary" className="mr-3">
                       Edit
                     </Button>
