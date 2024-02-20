@@ -7,7 +7,8 @@ import Candidate from "./pages/Candidate.jsx";
 import Employer from "./pages/employer/Employer.jsx";
 import EmployerDashboard from "./pages/Dashboard/EmployerDAshboard.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Homepage from "./pages/homepage/Homepage.jsx";
+import Homepage from "./pages/Homepage/Homepage.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
@@ -42,5 +43,8 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <>
+    <RouterProvider router={router} />
+    <Footer />
+  </>
 );

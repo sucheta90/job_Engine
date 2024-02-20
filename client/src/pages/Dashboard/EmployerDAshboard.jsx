@@ -73,6 +73,7 @@ export default function EmployerDashboard(props) {
       if (response.status !== 200) {
         throw Error({ message: "Something went wrong!!" });
       }
+      setToShow('AllJobs');
     } catch (err) {
       console.log(err);
     }
@@ -141,7 +142,6 @@ export default function EmployerDashboard(props) {
           ""
         )}
       </div>
-    
     </div>
   );
 }

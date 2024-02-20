@@ -2,11 +2,11 @@ export default function About() {
   return (
     <>
       <div>
-        <h1>About Us</h1>
+        <h2>About Us</h2>
         <img
           src="../../../assets/social-media-star-abstract-concept-vector-illustration-influencer-social-media-reach-engagement-celebrity-account-monetization-personal-blog-star-content-creation-abstract-metaphor_335657-4158.avif"
           alt=""
-          className="img-fluid"
+          className="img-fluid w-50"
         />
       </div>
       <div className="p-3">
@@ -17,6 +17,7 @@ export default function About() {
           navigate their careers. With a whirlwind of innovation and a
           commitment to empowering individuals, Worknado has swiftly become the
           go-to destination for job seekers and employers alike.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, eum soluta amet accusantium expedita et sit totam earum dolorum omnis dolor eos rerum recusandae voluptates eveniet iste! Molestiae, deleniti earum.
         </p>
 
         <h2>Experience the Worknado Difference:</h2>
