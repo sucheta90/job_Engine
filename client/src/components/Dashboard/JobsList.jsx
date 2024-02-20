@@ -1,17 +1,30 @@
 /* eslint-disable react/prop-types */
 // import CardComponent from "../UI/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-// import JobPostForm from "../Forms/JobPostForm";
+import auth from "../../utils/auth";
 import axios from "axios";
 import DetailCard from "../UI/DetailCard";
 
-export default function JobsList({ allJobs, userProfile }) {
+export default function JobsList({ userProfile }) {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({}); //initial form state
   const [showDetail, setShowDetail] = useState(false);
   const [details, setDetails] = useState("");
+  const [allJobs, setAllJobs] = useState(""); //all jobs list - active, inactive, closed
+  const [isUpdated, setIsUpdated] = useState(false);
+
+  useEffect(() => {
+    if (auth.loggedIn()) {
+      let userid = userProfile.id;
+      const getAlljobs = async (userid) => {
+        const jobsResponse = await axios.get(`/api/company/${userid}/jobs`);
+        setAllJobs(jobsResponse.data.result);
+      };
+      getAlljobs(userid);
+    }
+  }, [isUpdated, userProfile.id]);
 
   // The below function fetches  opens a form with pre-filled data
 
@@ -62,6 +75,7 @@ export default function JobsList({ allJobs, userProfile }) {
         formData
       );
       console.log("This is the response", response);
+      setIsUpdated(true);
     } catch (err) {
       console.log(err);
     }
@@ -78,9 +92,10 @@ export default function JobsList({ allJobs, userProfile }) {
       }
     });
     setDetails(job[0]);
-    // return job[0];
   };
-
+  const checkForUpdate = () => {
+    setIsUpdated(true);
+  };
   return (
     <div>
       {showDetail ? (
@@ -94,6 +109,7 @@ export default function JobsList({ allJobs, userProfile }) {
           showForm={showForm}
           formData={formData}
           userId={userProfile.id}
+          checkForUpdate={checkForUpdate}
         />
       ) : (
         <>
@@ -118,7 +134,7 @@ export default function JobsList({ allJobs, userProfile }) {
                         <Card.Text>
                           <b>{job.job_status}</b>
                         </Card.Text>
-                        <Card.Text>{job.company_details}</Card.Text>
+                        <Card.Text>{userProfile.company_name}</Card.Text>
 
                         <Button
                           className="mr-3 w-75"

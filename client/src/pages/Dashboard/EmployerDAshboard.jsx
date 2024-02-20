@@ -13,7 +13,7 @@ import axios from "axios";
 export default function EmployerDashboard(props) {
   const [toShow, setToShow] = useState("AccountDetails"); // The state will be set to show the specific section on click events
   const [userProfile, setUserProfile] = useState({}); //current user/company
-  const [allJobs, setAllJobs] = useState(""); //all jobs list - active, inactive, closed
+
   const [newJobData, setNewJobData] = useState({
     job_title: "",
     company_details: "",
@@ -43,12 +43,7 @@ export default function EmployerDashboard(props) {
         setUserProfile(response.data[0]);
         return response.data;
       };
-      const getAlljobs = async (userid) => {
-        const jobsResponse = await axios.get(`/api/company/${userid}/jobs`);
-        setAllJobs(jobsResponse.data.result);
-      };
       getUser(userid);
-      getAlljobs(userid);
     }
   }, []);
 
@@ -132,7 +127,6 @@ export default function EmployerDashboard(props) {
           <PublishedJobs />
         ) : toShow === "AllJobs" ? (
           <JobsList
-            allJobs={allJobs}
             handleNewJobFormFill={handleNewJobFormFill}
             newJobData={newJobData}
             userProfile={userProfile}
@@ -141,7 +135,6 @@ export default function EmployerDashboard(props) {
           ""
         )}
       </div>
-    
     </div>
   );
 }

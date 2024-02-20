@@ -16,6 +16,7 @@ export default function CardComponent(props) {
     formData,
     closeDetails,
     userId,
+    checkForUpdate,
   } = props;
 
   const handlePublishJob = async (e) => {
@@ -31,6 +32,7 @@ export default function CardComponent(props) {
           if (!data.status === 200) {
             throw Error({ message: "Could not complete request" });
           }
+          checkForUpdate();
           return data;
         });
     } catch (err) {
