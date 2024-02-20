@@ -1,7 +1,8 @@
 #footer {
-  /* margin-top: 4em; */
+  box-sizing: border-box;
   width: 100%;
   background-color: rgba(242, 115, 4, 1);
   color: white;
   padding: 5em;
+  margin: 0;
 }
