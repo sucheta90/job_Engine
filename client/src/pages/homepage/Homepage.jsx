@@ -6,38 +6,11 @@ import "./Homepage.css";
 import JobDetail from "../../components/UI/JobDetail";
 
 export default function Homepage() {
-  const [searchInput, setSearchInput] = useState("");
+  // const [searchInput, setSearchInput] = useState("");
   const [allJobs, setAllJobs] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedJob, setSelectedJob] = useState("");
 
-  function handleChange(e) {
-    const value = e.target.value;
-    setSearchInput(value);
-  }
-  function handleFormSubmit(e) {
-    e.preventDefault();
-    const formInput = document.getElementById("search_input");
-    console.log(formInput.value);
-    setSearchInput("");
-  }
-  function handleShowDetail(e) {
-    const jobId = parseInt(
-      e.target.parentElement.parentElement.getAttribute("data-id")
-    );
-    console.log(jobId);
-    const job = allJobs.filter((job) => {
-      if (job.id === jobId) {
-        return job;
-      }
-    });
-    setSelectedJob(job[0]);
-    setShowDetails(true);
-  }
-  const handleCloseDetails = () => {
-    setShowDetails(false);
-  };
-  // Function to fetch all posted jobs
   useEffect(() => {
     const getAllPostedJobs = () => {
       const jobList = axios
@@ -55,9 +28,29 @@ export default function Homepage() {
     };
     getAllPostedJobs();
   }, []);
+
+  // This function opens a detailed info section of selected job
+  function handleShowDetail(e) {
+    const jobId = parseInt(
+      e.target.parentElement.parentElement.getAttribute("data-id")
+    );
+    console.log(jobId);
+    const job = allJobs.filter((job) => {
+      if (job.id === jobId) {
+        return job;
+      }
+    });
+    setSelectedJob(job[0]);
+    setShowDetails(true);
+  }
+  // This function closes the detailed info section of selected job
+  const handleCloseDetails = () => {
+    setShowDetails(false);
+  };
+
   return (
     <Container className=" p-0">
-      <h1>Welcome to the Homepage</h1>
+      <h2>Welcome to the Homepage</h2>
       {showDetails ? (
         <JobDetail job={selectedJob} handleCloseDetails={handleCloseDetails} />
       ) : (

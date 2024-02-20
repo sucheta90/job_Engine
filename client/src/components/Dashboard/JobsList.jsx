@@ -14,7 +14,6 @@ export default function JobsList({ allJobs, userProfile }) {
   const [details, setDetails] = useState("");
 
   // The below function fetches  opens a form with pre-filled data
-
   const handleEditJob = async (e) => {
     const jobId = parseInt(
       e.target.parentElement.parentElement.getAttribute(`data-id`)
@@ -61,7 +60,7 @@ export default function JobsList({ allJobs, userProfile }) {
         `/api/company/${userId}/job/${jobId}`,
         formData
       );
-      console.log("This is the response", response);
+      // console.log("This is the response", response);
     } catch (err) {
       console.log(err);
     }
@@ -118,7 +117,7 @@ export default function JobsList({ allJobs, userProfile }) {
                         <Card.Text>
                           <b>{job.job_status}</b>
                         </Card.Text>
-                        <Card.Text>{job.company_details}</Card.Text>
+                        <Card.Text>{job.skills}</Card.Text>
 
                         <Button
                           className="mr-3 w-75"
