@@ -118,17 +118,6 @@ export default function EmployerDashboard(props) {
             All Jobs
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
-          <Nav.Link
-            eventKey="3"
-            id="PublishedJobs"
-            onClick={(e) => {
-              e.target.id === "PublishedJobs" ? setToShow("PublishedJobs") : "";
-            }}
-          >
-            Published Jobs
-          </Nav.Link>
-        </Nav.Item>
       </Nav>
       <div id="canvas" className="border border-dark p-5">
         {toShow === "jobPost" ? (
@@ -142,12 +131,17 @@ export default function EmployerDashboard(props) {
         ) : toShow === "PublishedJobs" ? (
           <PublishedJobs />
         ) : toShow === "AllJobs" ? (
-          <JobsList allJobs={allJobs} />
+          <JobsList
+            allJobs={allJobs}
+            handleNewJobFormFill={handleNewJobFormFill}
+            newJobData={newJobData}
+            userProfile={userProfile}
+          />
         ) : (
           ""
         )}
       </div>
-      {/* </section> */}
+    
     </div>
   );
 }
