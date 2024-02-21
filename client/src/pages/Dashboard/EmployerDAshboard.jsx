@@ -5,7 +5,6 @@ import Nav from "react-bootstrap/Nav";
 import JobPostForm from "../../components/Forms/JobPostForm";
 import AccountDetails from "../../components/Dashboard/AccountDetails";
 import JobsList from "../../components/Dashboard/JobsList";
-import PublishedJobs from "../../components/Dashboard/PublishedJobs";
 import auth from "../../utils/auth";
 import axios from "axios";
 
@@ -73,7 +72,7 @@ export default function EmployerDashboard(props) {
       if (response.status !== 200) {
         throw Error({ message: "Something went wrong!!" });
       }
-      setToShow('AllJobs');
+      setToShow("AllJobs");
     } catch (err) {
       console.log(err);
     }
