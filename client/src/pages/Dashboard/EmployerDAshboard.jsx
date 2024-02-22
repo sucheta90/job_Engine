@@ -128,8 +128,6 @@ export default function EmployerDashboard(props) {
           />
         ) : toShow === "AccountDetails" ? (
           <AccountDetails userProfile={userProfile} />
-        ) : toShow === "PublishedJobs" ? (
-          <PublishedJobs />
         ) : toShow === "AllJobs" ? (
           <JobsList
             allJobs={allJobs}

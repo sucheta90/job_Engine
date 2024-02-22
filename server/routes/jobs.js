@@ -158,6 +158,7 @@ router.put("/company/:companyId/job/:jobId/activate", (req, res) => {
   });
 });
 
+// Deletes job post by id
 router.delete("/company/:companyId/job/:jobId", (req, res) => {
   const id = req.params.jobId;
   const userId = req.params.companyId;
