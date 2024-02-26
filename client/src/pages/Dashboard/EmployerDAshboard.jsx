@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 // import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import JobPostForm from "../../components/Forms/JobPostForm";
-import AccountDetails from "../../components/Dashboard/AccountDetails";
-import JobsList from "../../components/Dashboard/JobsList";
+import AccountDetails from "../../components/EmployerHomepage/AccountDetails";
+import JobsList from "../../components/EmployerHomepage/JobsList";
 import auth from "../../utils/auth";
 import axios from "axios";
 
@@ -55,6 +55,8 @@ export default function EmployerDashboard(props) {
     const { name, value } = e.target;
     setNewJobData((prevVal) => ({ ...prevVal, [name]: value }));
   };
+
+  // ** This funcion submits the new job post - form
   const handlePostFormSubmit = async (e) => {
     let userId = userProfile.id;
     let revisedFormData = {
@@ -77,6 +79,8 @@ export default function EmployerDashboard(props) {
       console.log(err);
     }
   };
+  // *********************************************************
+
   return (
     <div className="h-100 mb-3">
       <h1>Welcome Too Your Dashboard</h1>
