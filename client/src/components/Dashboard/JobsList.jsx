@@ -66,6 +66,27 @@ export default function JobsList({ allJobs, userProfile }) {
     }
   };
 
+  const handleDeletePost = async (e) => {
+    e.preventDefault();
+    const userId = userProfile.id;
+    const jobId = e.target.parentElement.parentElement.getAttribute("data-id");
+    try {
+      const response = await axios
+        .delete(`/api/company/${userId}/job/${jobId}`)
+        .then((result) => {
+          if (!result.status === 200) {
+            throw Error({ message: "Could not delete post at this time" });
+          }
+          return result;
+        })
+        .catch((err) => {
+          console.log("Could not delete post at this time", err);
+        });
+    } catch (err) {
+      console.log("Could not delete post at this time", err);
+    }
+  };
+
   const handleShowDetails = (e) => {
     setShowDetail(true);
     const jobId = parseInt(
@@ -89,6 +110,7 @@ export default function JobsList({ allJobs, userProfile }) {
           handleEditFormSubmit={handleEditFormSubmit}
           handleFormChange={handleFormChange}
           handleCancelEdit={handleCancelEdit}
+          handleDeletePost={handleDeletePost}
           closeDetails={closeDetails}
           showForm={showForm}
           formData={formData}

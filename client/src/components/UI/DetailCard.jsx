@@ -12,6 +12,7 @@ export default function CardComponent(props) {
     handleEditFormSubmit,
     handleFormChange,
     handleCancelEdit,
+    handleDeletePost,
     showForm,
     formData,
     closeDetails,
@@ -87,7 +88,7 @@ export default function CardComponent(props) {
           <Button variant="primary" className="mr-3" onClick={handleEditJob}>
             Edit
           </Button>
-          <Button variant="primary" className="mr-3">
+          <Button variant="primary" className="mr-3" onClick={handleDeletePost}>
             Delete Post
           </Button>
           <Button onClick={closeDetails}>Back to Jobs List</Button>

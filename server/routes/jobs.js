@@ -158,16 +158,21 @@ router.put("/company/:companyId/job/:jobId/activate", (req, res) => {
   });
 });
 
-router.delete("/company/job/:jobId", (req, res) => {
+// Deletes job post by id
+router.delete("/company/:companyId/job/:jobId", (req, res) => {
   const id = req.params.jobId;
-  const sql = "DELETE FROM jobs WHERE id = ?";
-  db.query(sql, id, (err, result) => {
-    if (err) {
-      res.status(500).json({ message: "Delete unsuccessful" });
-    }
-    res.status(200).json({ message: "Deleted successfully" });
-  });
-  res.send("delete job by id");
+  const userId = req.params.companyId;
+  const sql = "DELETE FROM job WHERE id = ? AND company_id = ?";
+  try {
+    db.query(sql, [id, userId], (err, result) => {
+      if (err) {
+        res.status(500).json({ message: "Delete unsuccessful" });
+      }
+      res.status(200).json({ message: "Deleted successfully" });
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Delete unsuccessful", err });
+  }
 });
 
 module.exports = router;
