@@ -102,7 +102,7 @@ export default function JobsList({ allJobs, userProfile }) {
   };
 
   return (
-    <div>
+    <div className="">
       {showDetail ? (
         <DetailCard
           job={details}
@@ -118,40 +118,40 @@ export default function JobsList({ allJobs, userProfile }) {
         />
       ) : (
         <>
-          <h1>All Jobs</h1>
-          <div className="d-flex">
-            {allJobs.length >= 1
-              ? allJobs.map((job) => {
-                  return (
-                    <Card
-                      key={job.id}
-                      className="m-3"
-                      data-id={job.id}
-                      style={{
-                        height: "20em",
-                        width: "25%",
-                        boxShadow: "-3px 5px 8px grey",
-                      }}
-                    >
-                      <Card.Img variant="top" key={`img_${job.id}`} />
-                      <Card.Body className="d-flex flex-column align-items-center">
-                        <Card.Title>{job.job_title}</Card.Title>
-                        <Card.Text>
-                          <b>{job.job_status}</b>
-                        </Card.Text>
-                        <Card.Text>{job.skills}</Card.Text>
+          <h3>All Jobs</h3>
+          <div className="container" style={{ height: "80vh" }}>
+            <div className="row">
+              {allJobs.length >= 1
+                ? allJobs.map((job) => {
+                    return (
+                      <Card
+                        key={job.id}
+                        className="m-3 col-lg-4"
+                        data-id={job.id}
+                        style={{
+                          boxShadow: "-3px 5px 8px grey",
+                        }}
+                      >
+                        <Card.Img variant="top" key={`img_${job.id}`} />
+                        <Card.Body className="">
+                          <Card.Title>{job.job_title}</Card.Title>
+                          <Card.Text>
+                            <b>{job.job_status}</b>
+                          </Card.Text>
+                          <Card.Text>{job.skills}</Card.Text>
 
-                        <Button
-                          className="mr-3 w-75"
-                          onClick={handleShowDetails}
-                        >
-                          Show Details
-                        </Button>
-                      </Card.Body>
-                    </Card>
-                  );
-                })
-              : `Did not find a post`}
+                          <Button
+                            className="mr-3 w-75"
+                            onClick={handleShowDetails}
+                          >
+                            Show Details
+                          </Button>
+                        </Card.Body>
+                      </Card>
+                    );
+                  })
+                : `Did not find a post`}
+            </div>
           </div>
         </>
       )}
