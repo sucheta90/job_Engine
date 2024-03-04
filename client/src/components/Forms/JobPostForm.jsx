@@ -64,13 +64,13 @@ function JobPostForm(props) {
             <Form.Select
               aria-label="Default select example"
               name="experience"
-              value={newJobData.experience}
+              value={job.experience}
               onChange={handleNewJobFormFill}
               required
             >
-              <option>Experince Required</option>
+              <option>Experience Required</option>
               <option value="Entry-level">
-                Entry-level (No to Little Experince Required)
+                Entry-level ( Little to NO Experience Required )
               </option>
               <option value="Junior">Junior ( 0 to 2 years )</option>
               <option value="Associate">Associate ( 2 to 5 years )</option>
@@ -229,21 +229,22 @@ function JobPostForm(props) {
               <option value="Hybrid">Hybrid</option>
             </Form.Select>
           </Form.Group>
-
-          <Button
-            variant="primary"
-            type="submit"
-            className="mr-3"
-            onClick={handleEditFormSubmit}
-          >
-            Save as Draft
-          </Button>
-          <Button className="mr-3" onClick={handlePublishJob}>
-            Publish
-          </Button>
-          <Button variant="primary" type="" onClick={handleCancelEdit}>
-            Cancel
-          </Button>
+          <Form.Group style={{ textAlign: "center" }}>
+            <Button
+              variant="primary"
+              type="submit"
+              className="mr-3"
+              onClick={handleEditFormSubmit}
+            >
+              Save as Draft
+            </Button>
+            <Button className="mr-3" onClick={handlePublishJob}>
+              Publish
+            </Button>
+            <Button variant="primary" type="" onClick={handleCancelEdit}>
+              Cancel
+            </Button>
+          </Form.Group>
         </Form>
       </Card>
     </>
@@ -285,9 +286,9 @@ function JobPostForm(props) {
             onChange={handleNewJobFormFill}
             required
           >
-            <option>Experince Required</option>
+            <option>Experience Required</option>
             <option value="Entry-level">
-              Entry-level (No to Little Experince Required)
+              Entry-level (No to Little Experience Required)
             </option>
             <option value="Junior">Junior ( 0 to 2 years )</option>
             <option value="Associate">Associate ( 2 to 5 years )</option>

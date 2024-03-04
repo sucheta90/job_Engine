@@ -60,7 +60,9 @@ export default function JobsList({ allJobs, userProfile }) {
         `/api/company/${userId}/job/${jobId}`,
         formData
       );
-      // console.log("This is the response", response);
+      if (!response.status === 200) {
+        throw Error({ message: response.message });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -134,7 +136,9 @@ export default function JobsList({ allJobs, userProfile }) {
                       >
                         <Card.Img variant="top" key={`img_${job.id}`} />
                         <Card.Body className="">
-                          <Card.Title>{job.job_title}</Card.Title>
+                          <Card.Title>
+                            {job.experience} {job.job_title}
+                          </Card.Title>
                           <Card.Text>
                             <b>{job.job_status}</b>
                           </Card.Text>

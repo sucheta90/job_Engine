@@ -3,6 +3,7 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import JobPostForm from "../Forms/JobPostForm";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function CardComponent(props) {
@@ -18,7 +19,36 @@ export default function CardComponent(props) {
     closeDetails,
     userId,
   } = props;
+  const [experience, setExperience] = useState("");
 
+  useEffect(() => {
+    const experienceReq = (job) => {
+      const exp = job.experience;
+      switch (exp) {
+        case "Entry-level":
+          setExperience("Little to NO Experince Required");
+          break;
+        case "Junior":
+          setExperience("0 to 2 years");
+          break;
+        case "Associate":
+          setExperience("2 to 5 years");
+          break;
+        case "Mid-level":
+          setExperience("5 to 10 years");
+          break;
+        case "Senior":
+          setExperience("10 years and above");
+          break;
+      }
+    };
+    experienceReq(job);
+  }, [job]);
+
+  /**
+   *
+   * @param {*} e
+   */
   const handlePublishJob = async (e) => {
     e.preventDefault();
     const jobId = job.id;
@@ -55,15 +85,17 @@ export default function CardComponent(props) {
         </section>
         <Card.Img variant="top" />
         <Card.Body>
-          <Card.Title>{job.job_title}</Card.Title>
+          <Card.Title>
+            {job.experience} {job.job_title}
+          </Card.Title>
           <Card.Text>{job.company_details}</Card.Text>
           <Card.Text>
             <b>Description</b> <br />
             {job.description}
           </Card.Text>
           <Card.Text>
-            Exprerience required: <br /> {job.experience_min} -{" "}
-            {job.experience_max}{" "}
+            <b>Exprerience required</b> <br />
+            {experience}
           </Card.Text>
           <Card.Text>
             <b>Skills Required</b> {job.skills}
@@ -81,9 +113,9 @@ export default function CardComponent(props) {
           <Card.Text>
             <b>Estimated Annual Salary</b> ${job.salary_min} - ${job.salary_max}
           </Card.Text>
-          <Card.Text>
+          {/* <Card.Text>
             <b>Expiry Date</b> {job.description}
-          </Card.Text>
+          </Card.Text> */}
 
           <Button variant="primary" className="mr-3" onClick={handleEditJob}>
             Edit
