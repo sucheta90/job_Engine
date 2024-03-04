@@ -36,8 +36,10 @@ CREATE TABLE job(
     REFERENCES company(id)
     ON DELETE SET NULL,
     /* application_received INT DEFAULT 0 NOT NULL, */
-    job_status VARCHAR(30)
+    job_status VARCHAR(30)   
 );
+
+CREATE UNIQUE INDEX un_job ON job (company_id, job_title, location_city, location_state);
 
 CREATE TABLE candidate(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

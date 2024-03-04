@@ -3,14 +3,16 @@ import { useEffect, useState } from "react";
 // import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import JobPostForm from "../../components/Forms/JobPostForm";
-import AccountDetails from "../../components/EmployerHomepage/AccountDetails";
+// import AccountDetails from "../../components/EmployerHomepage/AccountDetails";
 import JobsList from "../../components/EmployerHomepage/JobsList";
 import auth from "../../utils/auth";
 import axios from "axios";
 
 // eslint-disable-next-line no-unused-vars
 export default function EmployerDashboard(props) {
-  const [toShow, setToShow] = useState("AccountDetails"); // The state will be set to show the specific section on click events
+  const [toShow, setToShow] = useState("AllJobs"); // The state will be set to show the specific section on click events
+  const [errorMessage, setErrorMessage] = useState(""); // The initial state of error message
+  const [showErr, setShowErr] = useState(false); // Flag to dertermine wether to show or hide error message
   const [userProfile, setUserProfile] = useState({}); //current user/company
   const [allJobs, setAllJobs] = useState(""); //all jobs list - active, inactive, closed
   const [newJobData, setNewJobData] = useState({
@@ -72,34 +74,38 @@ export default function EmployerDashboard(props) {
       );
       console.log("This is the response", response);
       if (response.status !== 200) {
-        throw Error({ message: "Something went wrong!!" });
+        throw Error({ message: ["Something went wrong!!", response.error] });
       }
-      setToShow("AllJobs");
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
+      setErrorMessage(errorMessage);
+      setShowErr(true);
+    } finally {
+      setToShow("AllJobs");
     }
   };
   // *********************************************************
 
   return (
     <div className="h-100 mb-3">
-      <h1>Welcome Too Your Dashboard</h1>
-      {/* <section className="d-flex justify-content-center"> */}
+      <h2>Welcome Too Your Dashboard</h2>
       <Nav activeKey="1">
-        <Nav.Item>
+        <Nav.Item className="mr-3">
           <Nav.Link
-            eventKey="1"
-            id="AccountDetails"
+            eventKey="3"
+            id="AllJobs"
             onClick={(e) => {
-              e.target.id === "AccountDetails"
-                ? setToShow("AccountDetails")
-                : "";
+              e.target.id === "AllJobs" ? setToShow("AllJobs") : "";
+            }}
+            className={toShow === "AllJobs" ? "bg-info text-white" : ""}
+            style={{
+              boxShadow: "-3px 5px 8px grey",
             }}
           >
-            Account Details
+            Home
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
+        <Nav.Item className="mr-3">
           <Nav.Link
             eventKey="2"
             title="Item"
@@ -107,31 +113,25 @@ export default function EmployerDashboard(props) {
             onClick={(e) => {
               e.target.id === "jobPost" ? setToShow("jobPost") : "";
             }}
+            className={toShow === "jobPost" ? "bg-info text-white" : ""}
+            style={{
+              boxShadow: "-3px 5px 8px grey",
+            }}
           >
             Post A Job
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
-          <Nav.Link
-            eventKey="3"
-            id="AllJobs"
-            onClick={(e) => {
-              e.target.id === "AllJobs" ? setToShow("AllJobs") : "";
-            }}
-          >
-            All Jobs
-          </Nav.Link>
-        </Nav.Item>
       </Nav>
-      <div id="canvas" className="border border-dark p-5">
+      <hr />
+      <div id="canvas" className="">
         {toShow === "jobPost" ? (
           <JobPostForm
             newJobData={newJobData}
             handleNewJobFormFill={handleNewJobFormFill}
             handlePostFormSubmit={handlePostFormSubmit}
+            showErr={showErr}
+            errorMessage={errorMessage}
           />
-        ) : toShow === "AccountDetails" ? (
-          <AccountDetails userProfile={userProfile} />
         ) : toShow === "AllJobs" ? (
           <JobsList
             allJobs={allJobs}

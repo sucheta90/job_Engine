@@ -1,5 +1,4 @@
 #root {
-  max-width: 1400px;
   margin: 0 auto;
   /* padding: 2rem; */
   text-align: center;
@@ -9,6 +8,8 @@ li {
 }
 .main_container {
   height: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

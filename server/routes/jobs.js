@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const db = require("../config/dbConnection");
-const { getAllJobs, getAJob } = require("../dbQueries/dbQuery");
 
 // This function feteches all jobs form database
 router.get("/jobs", (req, res) => {
@@ -65,9 +64,10 @@ router.get("/company/:companyId/job/:jobid", (req, res) => {
 });
 
 //********************************************************************
-//
+
 router.post("/company/:companyId/job", (req, res) => {
-  // console.log("This route was hit");
+  const uniqueIndex =
+    "CREATE UNIQUE INDEX index_unique ON job (id, company_id, job_title, location_city, location_state )";
   const sql =
     "INSERT INTO job (job_title, company_details, experience_min, experience_max, run_until, description, responsibility, skills, salary_min, salary_max, benefits, location_city, location_state, job_type, company_id, job_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?, ?,?,?)";
   const params = [
@@ -97,7 +97,9 @@ router.post("/company/:companyId/job", (req, res) => {
   });
 });
 
-//********************************************************************
+/**
+ * This function handles editing / updating a job post
+ */
 
 router.put("/company/:companyId/job/:jobId", (req, res) => {
   const sql =

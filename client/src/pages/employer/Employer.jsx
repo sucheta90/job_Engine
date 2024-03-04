@@ -3,6 +3,8 @@ import Stack from "react-bootstrap/esm/Stack";
 import Loginform from "../../components/Forms/Loginform";
 import SignupForm from "../../components/Forms/Signupfrom";
 import auth from "../../utils/auth";
+import { checkSignupFormInput } from "../../utils/handlers";
+// import { toast } from "react-toastify";
 // eslint-disable-next-line no-unused-vars
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
@@ -56,7 +58,8 @@ export default function Employer() {
     try {
       const response = await axios.post("/api/company/login", formData);
       if (response.status !== 200) {
-        throw Error("could not log in");
+        // toast.error(`${response.error}`);
+        throw Error("Incorrect Username or password");
       }
       // eslint-disable-next-line no-unused-vars
       const { token, user } = response.data;
@@ -73,6 +76,10 @@ export default function Employer() {
   const signup = (e) => {
     e.preventDefault();
     let formData = { ...signupFormData };
+    for (let el in formData) {
+      let newVal = checkSignupFormInput(el, formData[el]);
+      formData[el] = newVal;
+    }
     axios
       .post("/api/company/signup", formData)
       // eslint-disable-next-line no-unused-vars

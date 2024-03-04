@@ -4,13 +4,14 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import About from "./pages/About.jsx";
 import Candidate from "./pages/Candidate.jsx";
-import Employer from "./pages/employer/Employer.jsx";
-import EmployerDashboard from "./pages/Dashboard/EmployerDAshboard.jsx";
+import Employer from "./pages/Employer/Employer.jsx";
+import EmployerDashboard from "./pages/Dashboard/EmployerDashboard.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Homepage from "./pages/Homepage/Homepage.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 
 const router = createBrowserRouter([
