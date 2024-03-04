@@ -20,6 +20,8 @@ function JobPostForm(props) {
     handleFormChange,
     handleEditFormSubmit,
     handlePublishJob,
+    showErr,
+    errorMessage,
   } = props;
 
   return job ? (
@@ -264,6 +266,7 @@ function JobPostForm(props) {
     <>
       <h1>Post A New Job</h1>
       <Form>
+        {/* {showErr && <div className="border border-danger">{errorMessage}</div>} */}
         <Form.Group>
           <Form.Text className="text-muted">
             All jobs will be saved a inactive status, until published by the

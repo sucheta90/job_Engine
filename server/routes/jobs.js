@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const db = require("../config/dbConnection");
-const { getAllJobs, getAJob } = require("../dbQueries/dbQuery");
 
 // This function feteches all jobs form database
 router.get("/jobs", (req, res) => {
@@ -65,10 +64,10 @@ router.get("/company/:companyId/job/:jobid", (req, res) => {
 });
 
 //********************************************************************
-//
+
 router.post("/company/:companyId/job", (req, res) => {
-  // console.log("This route was hit");
-  const uniqueIndex = "CREATE UNIQUE INDEX index_unique ON job (id, company_id, job_title, location_city, location_state )";
+  const uniqueIndex =
+    "CREATE UNIQUE INDEX index_unique ON job (id, company_id, job_title, location_city, location_state )";
   const sql =
     "INSERT INTO job (job_title, company_details, experience_min, experience_max, run_until, description, responsibility, skills, salary_min, salary_max, benefits, location_city, location_state, job_type, company_id, job_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?, ?,?,?)";
   const params = [
@@ -94,19 +93,13 @@ router.post("/company/:companyId/job", (req, res) => {
       console.log(err);
       res.status(500).json({ message: err.message });
     }
-    // else{
-    //   db.query(uniqueIndex, (err, result)=>{
-    //     if(err){
-    //       res.status(500).json({ message: err.message });
-    //     }
-    //     res.status(200).json({ message: "Job posted successfully", result });
-    //   })
-    // }
     res.status(200).json({ message: "Job posted successfully", result });
   });
 });
 
-//********************************************************************
+/**
+ * This function handles editing / updating a job post
+ */
 
 router.put("/company/:companyId/job/:jobId", (req, res) => {
   const sql =

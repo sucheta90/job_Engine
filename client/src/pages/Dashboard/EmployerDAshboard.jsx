@@ -11,6 +11,8 @@ import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 export default function EmployerDashboard(props) {
   const [toShow, setToShow] = useState("AllJobs"); // The state will be set to show the specific section on click events
+  const [errorMessage, setErrorMessage] = useState(""); // The initial state of error message
+  const [showErr, setShowErr] = useState(false); // Flag to dertermine wether to show or hide error message
   const [userProfile, setUserProfile] = useState({}); //current user/company
   const [allJobs, setAllJobs] = useState(""); //all jobs list - active, inactive, closed
   const [newJobData, setNewJobData] = useState({
@@ -72,11 +74,14 @@ export default function EmployerDashboard(props) {
       );
       console.log("This is the response", response);
       if (response.status !== 200) {
-        throw Error({ message: "Something went wrong!!" });
+        throw Error({ message: ["Something went wrong!!", response.error] });
       }
-      setToShow("AllJobs");
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
+      setErrorMessage(errorMessage);
+      setShowErr(true);
+    } finally {
+      setToShow("AllJobs");
     }
   };
   // *********************************************************
@@ -124,6 +129,8 @@ export default function EmployerDashboard(props) {
             newJobData={newJobData}
             handleNewJobFormFill={handleNewJobFormFill}
             handlePostFormSubmit={handlePostFormSubmit}
+            showErr={showErr}
+            errorMessage={errorMessage}
           />
         ) : toShow === "AllJobs" ? (
           <JobsList
