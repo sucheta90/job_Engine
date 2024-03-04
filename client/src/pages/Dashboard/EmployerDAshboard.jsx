@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import JobPostForm from "../../components/Forms/JobPostForm";
-import AccountDetails from "../../components/EmployerHomepage/AccountDetails";
+// import AccountDetails from "../../components/EmployerHomepage/AccountDetails";
 import JobsList from "../../components/EmployerHomepage/JobsList";
 import auth from "../../utils/auth";
 import axios from "axios";
