@@ -19,8 +19,7 @@ CREATE TABLE job(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     job_title VARCHAR(255),
     company_details TEXT,
-    experience_min INT NOT NULL,
-    experience_max INT NOT NULL,
+    experience VARCHAR(50),
     run_until INT NOT NULL,
     description TEXT,
     responsibility TEXT,
@@ -35,7 +34,7 @@ CREATE TABLE job(
     FOREIGN KEY(company_id)
     REFERENCES company(id)
     ON DELETE SET NULL,
-    /* application_received INT DEFAULT 0 NOT NULL, */
+    application_received INT DEFAULT 0 NOT NULL,
     job_status VARCHAR(30)   
 );
 
