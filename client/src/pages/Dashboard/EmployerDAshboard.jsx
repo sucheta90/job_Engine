@@ -52,6 +52,14 @@ export default function EmployerDashboard(props) {
     }
   }, []);
 
+  /**
+   *
+   * @param {*} e
+   */
+  const handleCloseForm = (e) => {
+    setToShow("AllJobs");
+  };
+
   const handleNewJobFormFill = (e) => {
     const { name, value } = e.target;
     setNewJobData((prevVal) => ({ ...prevVal, [name]: value }));
@@ -130,6 +138,7 @@ export default function EmployerDashboard(props) {
             handlePostFormSubmit={handlePostFormSubmit}
             showErr={showErr}
             errorMessage={errorMessage}
+            handleCloseForm={handleCloseForm}
           />
         ) : toShow === "AllJobs" ? (
           <JobsList

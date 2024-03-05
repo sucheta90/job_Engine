@@ -3,6 +3,12 @@
 import { React, useState, useEffect } from "react";
 import { Container, Button, Card } from "react-bootstrap";
 import axios from "axios";
+import Navbar from "react-bootstrap/Navbar";
+import Dropdown from "react-bootstrap/Dropdown";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import "./Homepage.css";
 import JobDetail from "../../components/UI/JobDetail";
 
@@ -52,6 +58,39 @@ export default function Homepage() {
   return (
     <Container className=" p-0">
       <h2>Welcome to the Homepage</h2>
+      <Navbar className="bg-body-tertiary justify-content-between">
+        <Form inline></Form>
+        <Form inline>
+          <Row>
+            <Col xs="auto">
+              <Form.Group
+                className="mb-3 d-flex justify-content-evenly"
+                controlId=""
+              >
+                <Form.Label className="mr-3">Filter By:</Form.Label>
+                <Form.Select
+                  aria-label="Default"
+                  name="experience"
+                  // value={newJobData.experience}
+                  // onChange={handleNewJobFormFill}
+                >
+                  <option>Experience Level</option>
+                  <option value="Entry-level">
+                    Entry-level (Little to No Experience Required)
+                  </option>
+                  <option value="Junior">Junior ( 0 to 2 years )</option>
+                  <option value="Associate">Associate ( 2 to 5 years )</option>
+                  <option value="Mid-level">Mid-level ( 5 to 10 years )</option>
+                  <option value="Senior">Senior ( 10 years and above )</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col xs="auto">
+              <Button type="submit">Search</Button>
+            </Col>
+          </Row>
+        </Form>
+      </Navbar>
       {showDetails ? (
         <JobDetail job={selectedJob} handleCloseDetails={handleCloseDetails} />
       ) : (
@@ -74,7 +113,9 @@ export default function Homepage() {
                       style={{ boxShadow: "-3px 5px 8px grey" }}
                     >
                       <Card.Body>
-                        <Card.Title>{job.job_title}</Card.Title>
+                        <Card.Title>
+                          {job.experience} {job.job_title}
+                        </Card.Title>
                         <Card.Text>{job.skills}</Card.Text>
                         <Card.Text>
                           {job.location_city}, {job.location_state}
