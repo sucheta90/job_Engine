@@ -11,12 +11,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./Homepage.css";
 import JobDetail from "../../components/UI/JobDetail";
+import { error } from "console";
 
 export default function Homepage() {
   // const [searchInput, setSearchInput] = useState("");
   const [allJobs, setAllJobs] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedJob, setSelectedJob] = useState("");
+  const [experienceLevel, setExperienceLevel] = useState("");
 
   useEffect(() => {
     const getAllPostedJobs = () => {
@@ -36,6 +38,21 @@ export default function Homepage() {
     getAllPostedJobs();
   }, []);
 
+  const searchByExperience = (e) => {
+    e.preventDefault();
+    const jobList = axios
+      .get(`/api/jobs/${experienceLevel}`)
+      .then((response) => {
+        if (!response.status === 200) {
+          return "No Jobs Found!";
+        }
+        setAllJobs(response.data.result);
+      })
+      .catch((error) => {
+        setAllJobs([]);
+        console.error(error);
+      });
+  };
   // This function opens a detailed info section of selected job
   function handleShowDetail(e) {
     const jobId = parseInt(
@@ -59,8 +76,8 @@ export default function Homepage() {
     <Container className=" p-0">
       <h2>Welcome to the Homepage</h2>
       <Navbar className="bg-body-tertiary justify-content-between">
-        <Form inline></Form>
-        <Form inline>
+        <Form inline="true"></Form>
+        <Form inline="true">
           <Row>
             <Col xs="auto">
               <Form.Group
@@ -72,7 +89,10 @@ export default function Homepage() {
                   aria-label="Default"
                   name="experience"
                   // value={newJobData.experience}
-                  // onChange={handleNewJobFormFill}
+                  onChange={(e) => {
+                    let exp = e.target.value;
+                    setExperienceLevel(exp);
+                  }}
                 >
                   <option>Experience Level</option>
                   <option value="Entry-level">
@@ -86,7 +106,9 @@ export default function Homepage() {
               </Form.Group>
             </Col>
             <Col xs="auto">
-              <Button type="submit">Search</Button>
+              <Button type="submit" onClick={searchByExperience}>
+                Search
+              </Button>
             </Col>
           </Row>
         </Form>
