@@ -20,14 +20,14 @@ function JobPostForm(props) {
     handleFormChange,
     handleEditFormSubmit,
     handlePublishJob,
-    showErr,
-    errorMessage,
+    // showErr,
+    // errorMessage,
   } = props;
 
   return job ? (
     <>
       <Card className="p-3 mb-4" style={{ boxShadow: "-3px 5px 8px grey" }}>
-        <Form>
+        <Form style={{ textAlign: "left" }}>
           <Form.Group
             className="mb-3 d-flex justify-content-evenly"
             controlId=""
@@ -60,44 +60,29 @@ function JobPostForm(props) {
             className="mb-3 d-flex justify-content-evenly"
             controlId=""
           >
-            <Form.Label className="mr-3">
-              Minimum experience required
-            </Form.Label>
-            <Form.Control
-              type="number"
-              min={0}
-              placeholder="Enter minimum experince in years"
-              name="experience_min"
-              value={job.experience_min}
-              onChange={handleFormChange}
+            <Form.Label className="mr-3">Experience Required</Form.Label>
+            <Form.Select
+              aria-label="Default select example"
+              name="experience"
+              value={job.experience}
+              onChange={handleNewJobFormFill}
               required
-            />
-            <Form.Text className="text-muted">
+            >
+              <option>Experience Required</option>
+              <option value="Entry-level">
+                Entry-level ( Little to NO Experience Required )
+              </option>
+              <option value="Junior">Junior ( 0 to 2 years )</option>
+              <option value="Associate">Associate ( 2 to 5 years )</option>
+              <option value="Mid-level">Mid-level ( 5 to 10 years )</option>
+              <option value="Senior">Senior ( 10 years and above )</option>
+            </Form.Select>
+            <Form.Text className="text-muted ml-2">
               The seniority level of the position will be set based on
               experience required for the position*
             </Form.Text>
           </Form.Group>
-          <Form.Group
-            className="mb-3 d-flex justify-content-evenly"
-            controlId=""
-          >
-            <Form.Label className="mr-3">
-              Maximum experience required
-            </Form.Label>
-            <Form.Control
-              type="number"
-              min={0}
-              placeholder="Enter maximum experince in years"
-              name="experience_max"
-              value={job.experience_max}
-              onChange={handleFormChange}
-              required
-            />
-            <Form.Text className="text-muted">
-              The seniority level of the position will be set based on
-              experience required for the position*
-            </Form.Text>
-          </Form.Group>
+          {/* ******************************************************************* */}
           <Form.Group
             className="mb-3 d-flex justify-content-evenly"
             controlId=""
@@ -244,35 +229,32 @@ function JobPostForm(props) {
               <option value="Hybrid">Hybrid</option>
             </Form.Select>
           </Form.Group>
-
-          <Button
-            variant="primary"
-            type="submit"
-            className="mr-3"
-            onClick={handleEditFormSubmit}
-          >
-            Save as Draft
-          </Button>
-          <Button className="mr-3" onClick={handlePublishJob}>
-            Publish
-          </Button>
-          <Button variant="primary" type="" onClick={handleCancelEdit}>
-            Cancel
-          </Button>
+          <Form.Group style={{ textAlign: "center" }}>
+            <Button
+              variant="primary"
+              type="submit"
+              className="mr-3"
+              onClick={handleEditFormSubmit}
+            >
+              Save as Draft
+            </Button>
+            <Button className="mr-3" onClick={handlePublishJob}>
+              Publish
+            </Button>
+            <Button variant="primary" type="" onClick={handleCancelEdit}>
+              Cancel
+            </Button>
+          </Form.Group>
         </Form>
       </Card>
     </>
   ) : (
     <>
       <h1>Post A New Job</h1>
-      <Form>
-        {/* {showErr && <div className="border border-danger">{errorMessage}</div>} */}
-        <Form.Group>
-          <Form.Text className="text-muted">
-            All jobs will be saved a inactive status, until published by the
-            user.
-          </Form.Text>
-        </Form.Group>
+      <p className="text-muted">
+        All jobs will be saved a inactive status, until published by the user.
+      </p>
+      <Form style={{ textAlign: "left" }}>
         <Form.Group className="mb-3 d-flex justify-content-evenly" controlId="">
           <Form.Label className="mr-3">Job Title</Form.Label>
           <Form.Control
@@ -296,37 +278,29 @@ function JobPostForm(props) {
           />
         </Form.Group>
         <Form.Group className="mb-3 d-flex justify-content-evenly" controlId="">
-          <Form.Label className="mr-3">Minimum experience required</Form.Label>
-          <Form.Control
-            type="number"
-            min={0}
-            placeholder="Enter minimum experince in years"
-            name="experience_min"
-            value={newJobData.experience_min}
+          <Form.Label className="mr-3">Experience Required</Form.Label>
+          <Form.Select
+            aria-label="Default select example"
+            name="experience"
+            value={newJobData.experience}
             onChange={handleNewJobFormFill}
             required
-          />
-          <Form.Text className="text-muted">
+          >
+            <option>Experience Required</option>
+            <option value="Entry-level">
+              Entry-level (No to Little Experience Required)
+            </option>
+            <option value="Junior">Junior ( 0 to 2 years )</option>
+            <option value="Associate">Associate ( 2 to 5 years )</option>
+            <option value="Mid-level">Mid-level ( 5 to 10 years )</option>
+            <option value="Senior">Senior ( 10 years and above )</option>
+          </Form.Select>
+          <Form.Text className="text-muted ml-2">
             The seniority level of the position will be set based on experience
             required for the position*
           </Form.Text>
         </Form.Group>
-        <Form.Group className="mb-3 d-flex justify-content-evenly" controlId="">
-          <Form.Label className="mr-3">Maximum experience required</Form.Label>
-          <Form.Control
-            type="number"
-            min={0}
-            placeholder="Enter maximum experince in years"
-            name="experience_max"
-            value={newJobData.experience_max}
-            onChange={handleNewJobFormFill}
-            required
-          />
-          <Form.Text className="text-muted">
-            The seniority level of the position will be set based on experience
-            required for the position*
-          </Form.Text>
-        </Form.Group>
+        {/* ******************************************************************* */}
         <Form.Group className="mb-3 d-flex justify-content-evenly" controlId="">
           <Form.Label className="mr-3">Position Open for days</Form.Label>
           <Form.Control
@@ -446,18 +420,19 @@ function JobPostForm(props) {
             <option value="Hybrid">Hybrid</option>
           </Form.Select>
         </Form.Group>
-
-        <Button
-          variant="primary"
-          type="submit"
-          className="mr-3"
-          onClick={handlePostFormSubmit}
-        >
-          Save as Draft
-        </Button>
-        <Button variant="primary" type="">
-          Back to Dashboard
-        </Button>
+        <Form.Group style={{ textAlign: "center" }}>
+          <Button
+            variant="primary"
+            type="submit"
+            className="mr-3"
+            onClick={handlePostFormSubmit}
+          >
+            Save as Draft
+          </Button>
+          <Button variant="primary" type="">
+            Back to Dashboard
+          </Button>
+        </Form.Group>
       </Form>
     </>
   );

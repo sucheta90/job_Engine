@@ -18,8 +18,7 @@ export default function EmployerDashboard(props) {
   const [newJobData, setNewJobData] = useState({
     job_title: "",
     company_details: "",
-    experience_min: "",
-    experience_max: "",
+    experience: "",
     run_until: "",
     description: "",
     responsibility: "",

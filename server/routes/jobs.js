@@ -26,6 +26,9 @@ router.get("/jobs", (req, res) => {
       .json({ message: "Something went wrong! Please try again", err });
   }
 });
+/**
+ *
+ */
 //********************************************************************
 // get all jobs by user id
 router.get("/company/:companyId/jobs", (req, res) => {
@@ -63,18 +66,17 @@ router.get("/company/:companyId/job/:jobid", (req, res) => {
   });
 });
 
-//********************************************************************
+/**
+ * Post a new job
+ */
 
 router.post("/company/:companyId/job", (req, res) => {
-  const uniqueIndex =
-    "CREATE UNIQUE INDEX index_unique ON job (id, company_id, job_title, location_city, location_state )";
   const sql =
-    "INSERT INTO job (job_title, company_details, experience_min, experience_max, run_until, description, responsibility, skills, salary_min, salary_max, benefits, location_city, location_state, job_type, company_id, job_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?, ?,?,?)";
+    "INSERT INTO job (job_title, company_details, experience, run_until, description, responsibility, skills, salary_min, salary_max, benefits, location_city, location_state, job_type, company_id, application_received, job_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?, ?,?,?)";
   const params = [
     req.body.job_title,
     req.body.company_details,
-    req.body.experience_min,
-    req.body.experience_max,
+    req.body.experience,
     req.body.run_until,
     req.body.description,
     req.body.responsibility,
@@ -86,6 +88,7 @@ router.post("/company/:companyId/job", (req, res) => {
     req.body.location_state,
     req.body.job_type,
     req.body.company_id,
+    req.body.application_received,
     req.body.job_status,
   ];
   db.query(sql, params, (err, result) => {
@@ -103,14 +106,13 @@ router.post("/company/:companyId/job", (req, res) => {
 
 router.put("/company/:companyId/job/:jobId", (req, res) => {
   const sql =
-    "UPDATE job SET job_title= ?, company_details= ?, experience_min=?, experience_max=?, run_until=?, description=?, responsibility=?, skills=?, salary_min=?, salary_max=?, benefits=?, location_city=?, location_state=?, job_type=?, company_id=?, job_status=? WHERE company_id=? AND id = ?";
+    "UPDATE job SET job_title= ?, company_details= ?, experience=?, run_until=?, description=?, responsibility=?, skills=?, salary_min=?, salary_max=?, benefits=?, location_city=?, location_state=?, job_type=?, company_id=?, application_received=?, job_status=? WHERE company_id=? AND id = ?";
   const id = req.params.jobId;
   const companyId = req.params.companyId;
   const params = [
     req.body.job_title,
     req.body.company_details,
-    req.body.experience_min,
-    req.body.experience_max,
+    req.body.experience,
     req.body.run_until,
     req.body.description,
     req.body.responsibility,
@@ -122,6 +124,7 @@ router.put("/company/:companyId/job/:jobId", (req, res) => {
     req.body.location_state,
     req.body.job_type,
     req.body.company_id,
+    req.body.application_received,
     req.body.job_status,
     companyId,
     id,
