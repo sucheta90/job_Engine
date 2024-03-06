@@ -28,7 +28,9 @@ export default function JobDetail(props) {
         </section>
         <Card.Img variant="top" />
         <Card.Body>
-          <Card.Title>{job.job_title}</Card.Title>
+          <Card.Title>
+            {job.experience} {job.job_title}
+          </Card.Title>
           <Card.Text>{job.company_details}</Card.Text>
           <Card.Text>
             <b>Description</b> <br />
