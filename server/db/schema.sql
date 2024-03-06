@@ -3,7 +3,7 @@ CREATE DATABASE company_db;
 
 USE company_db;
 
-CREATE TABLE company(
+CREATE TABLE IF NOT EXISTS company(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     company_name VARCHAR(255),
     address VARCHAR(300),
@@ -15,7 +15,7 @@ CREATE TABLE company(
     password VARCHAR(255)
 );
 
-CREATE TABLE job(
+CREATE TABLE IF NOT EXISTS job(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     job_title VARCHAR(255),
     company_details TEXT,
@@ -47,7 +47,7 @@ CREATE TABLE candidate(
     password VARCHAR(50) NOT NULL
 )
 
-CREATE TABLE skill(
+CREATE TABLE IF NOT EXISTS skill(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     skill_name VARCHAR(100) NOT NULL
 )
