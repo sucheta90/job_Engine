@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 import { React, useState, useEffect } from "react";
-import { Container, Button, Card } from "react-bootstrap";
+import { Container, Button, Card, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import "./Homepage.css";
 import JobDetail from "../../components/UI/JobDetail";
@@ -50,49 +50,62 @@ export default function Homepage() {
   };
 
   return (
-    <Container className=" p-0">
-      <h2>Welcome to the Homepage</h2>
+    <Container className="p-0">
+      <Row>
+        <h2 style={{ margin: "0 auto" }}>Welcome to the Homepage</h2>
+      </Row>
+      <hr />
       {showDetails ? (
         <JobDetail job={selectedJob} handleCloseDetails={handleCloseDetails} />
       ) : (
-        <section className="hero" style={{ float: "left" }}>
-          <div className="hero_image_container w-50">
-            <img
-              src="../../../assets/distance-working-abstract-concept-vector-illustration-distance-office-working-from-home-remote-job-possibility-communication-technology-online-team-meeting-digital-nomad-abstract-metaphor_335657-2923.avif"
-              alt=""
-            />
-          </div>
-          <ul className="mt-5 w-50 p-3" style={{ overflowY: "scroll" }}>
-            {allJobs.length >= 1 ? (
-              allJobs.map((job) => {
-                return (
-                  <li key={Math.random()}>
-                    <Card
-                      className="mb-3"
-                      data-id={job.id}
-                      key={Math.random()}
-                      style={{ boxShadow: "-3px 5px 8px grey" }}
-                    >
-                      <Card.Body>
-                        <Card.Title>{job.job_title}</Card.Title>
-                        <Card.Text>{job.skills}</Card.Text>
-                        <Card.Text>
-                          {job.location_city}, {job.location_state}
-                        </Card.Text>
-                        <Card.Text>{job.job_type}</Card.Text>
-                      </Card.Body>
-                      <Card.Footer>
-                        <Button onClick={handleShowDetail}>Show Details</Button>
-                      </Card.Footer>
-                    </Card>
-                  </li>
-                );
-              })
-            ) : (
-              <h4>No jobs found</h4>
-            )}
-          </ul>
-        </section>
+        <Row>
+          <Col className="col-12 col-lg-6">
+            <div className="hero_image_container">
+              <img
+                src="../../../assets/distance-working-abstract-concept-vector-illustration-distance-office-working-from-home-remote-job-possibility-communication-technology-online-team-meeting-digital-nomad-abstract-metaphor_335657-2923.avif"
+                alt=""
+              />
+            </div>
+          </Col>
+          <Col className="col-12 col-lg-6">
+            <Row>
+              <ul className="mt-5" style={{ overflowY: "scroll" }}>
+                <Col className="col-12">
+                  {allJobs.length >= 1 ? (
+                    allJobs.map((job) => {
+                      return (
+                        <li key={Math.random()}>
+                          <Card
+                            className="mb-3"
+                            data-id={job.id}
+                            key={Math.random()}
+                            style={{ boxShadow: "-3px 5px 8px grey" }}
+                          >
+                            <Card.Body>
+                              <Card.Title>{job.job_title}</Card.Title>
+                              <Card.Text>{job.skills}</Card.Text>
+                              <Card.Text>
+                                {job.location_city}, {job.location_state}
+                              </Card.Text>
+                              <Card.Text>{job.job_type}</Card.Text>
+                            </Card.Body>
+                            <Card.Footer>
+                              <Button onClick={handleShowDetail}>
+                                Show Details
+                              </Button>
+                            </Card.Footer>
+                          </Card>
+                        </li>
+                      );
+                    })
+                  ) : (
+                    <h4>No jobs found</h4>
+                  )}
+                </Col>
+              </ul>
+            </Row>
+          </Col>
+        </Row>
       )}
     </Container>
   );

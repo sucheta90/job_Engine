@@ -62,6 +62,7 @@ export default function EmployerDashboard(props) {
     let userId = userProfile.id;
     let revisedFormData = {
       ...newJobData,
+      application_received: 0,
       company_id: userId,
       job_status: "inactive",
     };

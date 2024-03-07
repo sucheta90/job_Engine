@@ -4,7 +4,8 @@
   background-size: cover;
 }
 #employer_dashboard div {
-  height: 800px;
+  /* height: 100%; */
+  border: 1px solid red;
 }
 #aside {
   /* border: 1px solid blue; */
