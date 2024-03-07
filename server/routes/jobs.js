@@ -1,7 +1,9 @@
 const router = require("express").Router();
 const db = require("../config/dbConnection");
 
-// This function feteches all jobs form database
+/**
+ * This function feteches all jobs form database
+ * */
 router.get("/jobs", (req, res) => {
   const sql = "SELECT * FROM job WHERE job_status = 'active'";
 
@@ -9,7 +11,7 @@ router.get("/jobs", (req, res) => {
     db.query(sql, (err, result) => {
       if (err) {
         res
-          .status(500)
+          .status(400)
           .json({ message: "Something went wrong! Please try again" });
       }
       if (result.length < 1) {
@@ -26,11 +28,30 @@ router.get("/jobs", (req, res) => {
       .json({ message: "Something went wrong! Please try again", err });
   }
 });
+
 /**
- *
+ * This function helps filter out jobs based on Experince Required
  */
-//********************************************************************
-// get all jobs by user id
+router.get("/jobs/:experience/", (req, res) => {
+  const sql =
+    "SELECT * FROM job WHERE job_status = 'active' AND experience = ?";
+  const experience = req.params.experience;
+
+  try {
+    db.query(sql, experience, (err, result) => {
+      if (err) {
+        res.status(400).json({ message: "Not a valid filter" });
+      }
+      res.status(200).json({ message: "Found these job/ jobs", result });
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Could not find a job at this time" });
+  }
+});
+
+/**
+ * Get all jobs by user id
+ */
 router.get("/company/:companyId/jobs", (req, res) => {
   const userId = req.params.companyId;
   const sql = "SELECT * FROM job WHERE company_id = ?";
@@ -43,8 +64,10 @@ router.get("/company/:companyId/jobs", (req, res) => {
     });
   });
 });
-//********************************************************************
-// getting a specific job by id and company id
+
+/**
+ * Getting a specific job by id and company id
+ */
 router.get("/company/:companyId/job/:jobid", (req, res) => {
   // prepared a dummy return for until the forntend is set up
   const sql = "SELECT * FROM job WHERE company_id= ? AND id = ?";
@@ -144,6 +167,29 @@ router.put("/company/:companyId/job/:jobId", (req, res) => {
 });
 // This function activates the job post
 router.put("/company/:companyId/job/:jobId/activate", (req, res) => {
+  const sql = "UPDATE job set job_status= ? WHERE company_id=? AND id = ?";
+  const id = req.params.jobId;
+  const companyId = req.params.companyId;
+  const params = [req.body.job_status, companyId, id];
+
+  db.query(sql, params, (err, result) => {
+    try {
+      if (err) {
+        console.log("This is the error------", err);
+        res.status(500).json({ message: "Could not update the job post", err });
+      }
+      res.status(200).json({ message: "Record updated successfully" });
+    } catch (err) {
+      console.log("This is the error------", err);
+      res.status(500).json({ message: "Could not update the job post", err });
+    }
+  });
+});
+
+/**
+ * With this function a candidate can apply to the specific job
+ */
+router.put("/company/:companyId/job/:jobId/application", (req, res) => {
   const sql = "UPDATE job set job_status= ? WHERE company_id=? AND id = ?";
   const id = req.params.jobId;
   const companyId = req.params.companyId;

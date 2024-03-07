@@ -3,6 +3,8 @@
 import { React, useState, useEffect } from "react";
 import { Container, Button, Card, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import Navbar from "react-bootstrap/Navbar";
+import Form from "react-bootstrap/Form";
 import "./Homepage.css";
 import JobDetail from "../../components/UI/JobDetail";
 
@@ -11,6 +13,7 @@ export default function Homepage() {
   const [allJobs, setAllJobs] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedJob, setSelectedJob] = useState("");
+  const [experienceLevel, setExperienceLevel] = useState("");
 
   useEffect(() => {
     const getAllPostedJobs = () => {
@@ -30,6 +33,21 @@ export default function Homepage() {
     getAllPostedJobs();
   }, []);
 
+  const searchByExperience = (e) => {
+    e.preventDefault();
+    const jobList = axios
+      .get(`/api/jobs/${experienceLevel}`)
+      .then((response) => {
+        if (!response.status === 200) {
+          return "No Jobs Found!";
+        }
+        setAllJobs(response.data.result);
+      })
+      .catch((error) => {
+        setAllJobs([]);
+        console.error(error);
+      });
+  };
   // This function opens a detailed info section of selected job
   function handleShowDetail(e) {
     const jobId = parseInt(
@@ -53,6 +71,52 @@ export default function Homepage() {
     <Container className="p-0">
       <Row>
         <h2 style={{ margin: "0 auto" }}>Welcome to the Homepage</h2>
+      </Row>
+      <Row className="mt-4 d-flex justify-content-end">
+        <Navbar className="bg-body-tertiary justify-content-between">
+          <Form inline="true"></Form>
+          <Form inline="true">
+            <Row>
+              <Col xs="auto">
+                <Form.Group
+                  className="mb-3 d-flex justify-content-evenly"
+                  controlId=""
+                >
+                  <Form.Label className="mr-3">Filter By:</Form.Label>
+                  <Form.Select
+                    aria-label="Default"
+                    name="experience"
+                    // value={newJobData.experience}
+                    onChange={(e) => {
+                      let exp = e.target.value;
+                      setExperienceLevel(exp);
+                    }}
+                  >
+                    <option>Experience Level</option>
+                    <option value="Entry-level">
+                      Entry-level (Little to No Experience Required)
+                    </option>
+                    <option value="Junior">Junior ( 0 to 2 years )</option>
+                    <option value="Associate">
+                      Associate ( 2 to 5 years )
+                    </option>
+                    <option value="Mid-level">
+                      Mid-level ( 5 to 10 years )
+                    </option>
+                    <option value="Senior">
+                      Senior ( 10 years and above )
+                    </option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col xs="auto">
+                <Button type="submit" onClick={searchByExperience}>
+                  Search
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Navbar>
       </Row>
       <hr />
       {showDetails ? (
@@ -82,7 +146,9 @@ export default function Homepage() {
                             style={{ boxShadow: "-3px 5px 8px grey" }}
                           >
                             <Card.Body>
-                              <Card.Title>{job.job_title}</Card.Title>
+                              <Card.Title>
+                                {job.experience} {job.job_title}
+                              </Card.Title>
                               <Card.Text>{job.skills}</Card.Text>
                               <Card.Text>
                                 {job.location_city}, {job.location_state}

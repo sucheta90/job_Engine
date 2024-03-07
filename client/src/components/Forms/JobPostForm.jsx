@@ -20,6 +20,7 @@ function JobPostForm(props) {
     handleFormChange,
     handleEditFormSubmit,
     handlePublishJob,
+    handleCloseForm,
     // showErr,
     // errorMessage,
   } = props;
@@ -41,6 +42,10 @@ function JobPostForm(props) {
               onChange={handleFormChange}
               required
             />
+            <Form.Text className="text-muted ml-2">
+              The seniority level of the position will be set based on
+              experience required for the position*
+            </Form.Text>
           </Form.Group>
           <Form.Group
             className="mb-3 d-flex justify-content-evenly"
@@ -70,7 +75,7 @@ function JobPostForm(props) {
             >
               <option>Experience Required</option>
               <option value="Entry-level">
-                Entry-level ( Little to NO Experience Required )
+                Entry-level ( Little to No Experience Required )
               </option>
               <option value="Junior">Junior ( 0 to 2 years )</option>
               <option value="Associate">Associate ( 2 to 5 years )</option>
@@ -288,7 +293,7 @@ function JobPostForm(props) {
           >
             <option>Experience Required</option>
             <option value="Entry-level">
-              Entry-level (No to Little Experience Required)
+              Entry-level (Little to No Experience Required)
             </option>
             <option value="Junior">Junior ( 0 to 2 years )</option>
             <option value="Associate">Associate ( 2 to 5 years )</option>
@@ -429,7 +434,7 @@ function JobPostForm(props) {
           >
             Save as Draft
           </Button>
-          <Button variant="primary" type="">
+          <Button variant="primary" type="" onClick={handleCloseForm}>
             Back to Dashboard
           </Button>
         </Form.Group>

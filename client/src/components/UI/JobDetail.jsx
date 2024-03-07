@@ -2,11 +2,37 @@
 // /* eslint-disable react/prop-types */
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { useEffect, useState } from "react";
 
 // import axios from "axios";
 
 export default function JobDetail(props) {
   const { handleCloseDetails, job } = props;
+  const [experince, setExperience] = useState("");
+
+  useEffect(() => {
+    const experienceReq = (job) => {
+      const exp = job.experience;
+      switch (exp) {
+        case "Entry-level":
+          setExperience("Little to NO Experince Required");
+          break;
+        case "Junior":
+          setExperience("0 to 2 years");
+          break;
+        case "Associate":
+          setExperience("2 to 5 years");
+          break;
+        case "Mid-level":
+          setExperience("5 to 10 years");
+          break;
+        case "Senior":
+          setExperience("10 years and above");
+          break;
+      }
+    };
+    experienceReq(job);
+  }, [job]);
 
   return (
     <div className="p-3">
@@ -28,15 +54,17 @@ export default function JobDetail(props) {
         </section>
         <Card.Img variant="top" />
         <Card.Body>
-          <Card.Title>{job.job_title}</Card.Title>
+          <Card.Title>
+            {job.experience} {job.job_title}
+          </Card.Title>
           <Card.Text>{job.company_details}</Card.Text>
           <Card.Text>
             <b>Description</b> <br />
             {job.description}
           </Card.Text>
           <Card.Text>
-            <b>Exprerience required</b> <br /> {job.experience_min} -{" "}
-            {job.experience_max} years
+            <b>Exprerience required</b> <br />
+            {experince}
           </Card.Text>
           <Card.Text>
             <b>Skills Required</b> {job.skills}
