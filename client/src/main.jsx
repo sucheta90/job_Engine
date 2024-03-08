@@ -9,6 +9,7 @@ import EmployerDashboard from "./pages/Dashboard/EmployerDashboard.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Homepage from "./pages/Homepage/Homepage.jsx";
 import Footer from "./components/Footer/Footer.jsx";
+import auth from "./utils/auth";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
