@@ -50,19 +50,46 @@ router.get("/jobs/:experience/", (req, res) => {
 });
 
 /**
+ * This function helps filter out jobs based on skill keyword
+ */
+router.get("/jobs/skill/:skill", (req, res) => {
+  const sql = "SELECT * FROM job WHERE job_status = 'active'";
+  const skill = req.params.skill;
+
+  try {
+    db.query(sql, (err, result) => {
+      if (err) {
+        res.status(400).json({ message: "Not a valid filter" });
+      }
+      const jobs = result.filter((job) => {
+        return job.skills.toLowerCase().includes(skill.toLowerCase());
+      });
+
+      res.status(200).json({ message: "Found these job/ jobs", jobs });
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Could not find a job at this time" });
+  }
+});
+
+/**
  * Get all jobs by user id
  */
 router.get("/company/:companyId/jobs", (req, res) => {
   const userId = req.params.companyId;
   const sql = "SELECT * FROM job WHERE company_id = ?";
-  db.query(sql, userId, (err, result) => {
-    if (err) {
-      res.status(500).json({ message: err.message });
-    }
-    res.status(200).json({
-      result,
+  try {
+    db.query(sql, userId, (err, result) => {
+      if (err) {
+        res.status(400).json({ message: err.message });
+      }
+      res.status(200).json({
+        result,
+      });
     });
-  });
+  } catch (error) {
+    res.status(500).json({ messsage: "Something unexpected happedned" });
+  }
 });
 
 /**
@@ -114,13 +141,17 @@ router.post("/company/:companyId/job", (req, res) => {
     req.body.application_received,
     req.body.job_status,
   ];
-  db.query(sql, params, (err, result) => {
-    if (err) {
-      console.log(err);
-      res.status(500).json({ message: err.message });
-    }
-    res.status(200).json({ message: "Job posted successfully", result });
-  });
+  try {
+    db.query(sql, params, (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json({ message: err.message });
+      }
+      res.status(200).json({ message: "Job posted successfully", result });
+    });
+  } catch (error) {
+    res.status(500).json({ message: "The Job could not posted at this time" });
+  }
 });
 
 /**
@@ -152,64 +183,70 @@ router.put("/company/:companyId/job/:jobId", (req, res) => {
     companyId,
     id,
   ];
-  db.query(sql, params, (err, result) => {
-    try {
+  try {
+    db.query(sql, params, (err, result) => {
       if (err) {
         console.log("This is the error------", err);
-        res.status(500).json({ message: "Could not update the job post", err });
+        res.status(400).json({ message: "Could not update the job post", err });
       }
       res.status(200).json({ message: "Record updated successfully" });
-    } catch (err) {
-      console.log("This is the error------", err);
-      res.status(500).json({ message: "Could not update the job post", err });
-    }
-  });
+    });
+  } catch (error) {
+    console.log("This is the error------", err);
+    res.status(500).json({ message: "Could not update the job post", err });
+  }
 });
-// This function activates the job post
+
+/**
+ * This function activates the job post
+ */
 router.put("/company/:companyId/job/:jobId/activate", (req, res) => {
   const sql = "UPDATE job set job_status= ? WHERE company_id=? AND id = ?";
   const id = req.params.jobId;
   const companyId = req.params.companyId;
   const params = [req.body.job_status, companyId, id];
 
-  db.query(sql, params, (err, result) => {
-    try {
+  try {
+    db.query(sql, params, (err, result) => {
       if (err) {
         console.log("This is the error------", err);
-        res.status(500).json({ message: "Could not update the job post", err });
+        res.status(400).json({ message: "Could not update the job post", err });
       }
       res.status(200).json({ message: "Record updated successfully" });
-    } catch (err) {
-      console.log("This is the error------", err);
-      res.status(500).json({ message: "Could not update the job post", err });
-    }
-  });
+    });
+  } catch (error) {
+    console.log("This is the error------", err);
+    res.status(500).json({ message: "Could not update the job post", err });
+  }
 });
 
 /**
  * With this function a candidate can apply to the specific job
  */
 router.put("/company/:companyId/job/:jobId/application", (req, res) => {
-  const sql = "UPDATE job set job_status= ? WHERE company_id=? AND id = ?";
+  const sql =
+    "UPDATE job set application_received = application_received + 1 WHERE company_id=? AND id = ?";
   const id = req.params.jobId;
   const companyId = req.params.companyId;
-  const params = [req.body.job_status, companyId, id];
+  const params = [companyId, id];
 
-  db.query(sql, params, (err, result) => {
-    try {
+  try {
+    db.query(sql, params, (err, result) => {
       if (err) {
         console.log("This is the error------", err);
-        res.status(500).json({ message: "Could not update the job post", err });
+        res.status(400).json({ message: "Could not update the job post", err });
       }
-      res.status(200).json({ message: "Record updated successfully" });
-    } catch (err) {
-      console.log("This is the error------", err);
-      res.status(500).json({ message: "Could not update the job post", err });
-    }
-  });
+      res.status(200).json({ message: "Applied to the job successfully" });
+    });
+  } catch (error) {
+    console.log("This is the error------", err);
+    res.status(500).json({ message: "Could not update the job post", err });
+  }
 });
 
-// Deletes job post by id
+/**
+ *  Deletes job post by id
+ */
 router.delete("/company/:companyId/job/:jobId", (req, res) => {
   const id = req.params.jobId;
   const userId = req.params.companyId;
@@ -217,7 +254,7 @@ router.delete("/company/:companyId/job/:jobId", (req, res) => {
   try {
     db.query(sql, [id, userId], (err, result) => {
       if (err) {
-        res.status(500).json({ message: "Delete unsuccessful" });
+        res.status(400).json({ message: "Delete unsuccessful" });
       }
       res.status(200).json({ message: "Deleted successfully" });
     });

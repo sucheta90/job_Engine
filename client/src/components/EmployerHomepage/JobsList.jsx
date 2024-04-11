@@ -73,6 +73,7 @@ export default function JobsList({ allJobs, userProfile }) {
     const userId = userProfile.id;
     const jobId = e.target.parentElement.parentElement.getAttribute("data-id");
     try {
+      // eslint-disable-next-line no-unused-vars
       const response = await axios
         .delete(`/api/company/${userId}/job/${jobId}`)
         .then((result) => {
@@ -128,7 +129,7 @@ export default function JobsList({ allJobs, userProfile }) {
                     return (
                       <Card
                         key={job.id}
-                        className="m-3 col-lg-4"
+                        className="m-3 col-lg-3"
                         data-id={job.id}
                         style={{
                           boxShadow: "-3px 5px 8px grey",

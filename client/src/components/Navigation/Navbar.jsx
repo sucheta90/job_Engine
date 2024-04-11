@@ -2,8 +2,10 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import auth from "../../utils/auth";
+
 // import NavDropdown from "react-bootstrap/NavDropdown";
 import { useLocation } from "react-router-dom";
+import "./Navbar.css";
 
 export default function NavHeader() {
   // Main Navbar
