@@ -82,6 +82,14 @@ export default function Homepage() {
                   className="mb-3 d-flex justify-content-evenly"
                   controlId=""
                 >
+                  <Form.Label></Form.Label>
+                </Form.Group>
+              </Col>
+              <Col xs="auto">
+                <Form.Group
+                  className="mb-3 d-flex justify-content-evenly"
+                  controlId=""
+                >
                   <Form.Label className="mr-3">Filter By:</Form.Label>
                   <Form.Select
                     aria-label="Default"
