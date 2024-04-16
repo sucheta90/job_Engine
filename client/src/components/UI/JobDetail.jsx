@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 export default function JobDetail(props) {
-  const { handleCloseDetails, job } = props;
+  const { handleCloseDetails, job, showJobApplicationForm } = props;
   const [experince, setExperience] = useState("");
 
   useEffect(() => {
@@ -117,7 +117,11 @@ export default function JobDetail(props) {
             <b>Expiry Date</b>
           </Card.Text>
 
-          <Button variant="primary" className="mr-3" onClick={applyToAJob}>
+          <Button
+            variant="primary"
+            className="mr-3"
+            onClick={showJobApplicationForm}
+          >
             Apply
           </Button>
           <Button onClick={handleCloseDetails}>Back to Jobs List</Button>
